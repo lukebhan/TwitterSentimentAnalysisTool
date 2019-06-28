@@ -1,4 +1,4 @@
-from scraper import Scraper
+from tweets_scraper import Scraper
 import datetime
 from database import Database
 
