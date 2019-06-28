@@ -2,8 +2,7 @@ import tweepy
 import numpy as np
 
 
-
-class Scraper:
+class TweetScraper:
     # initialize tweepy with account without access token required
     def __init__(self, consumer_key, consumer_secret, access_token=None, access_token_secret=None):
         auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
@@ -39,21 +38,12 @@ class Scraper:
                 end_date.month) + "-" + str(end_date.day)
             return self.api.search(query, tweet_mode='extended')
 
-    def data_processing(self, data):
+    @staticmethod
+    def data_processing(data):
         tweet_vector = []
         for value in data:
             single_tweet = [value.user.screen_name, value.full_text, value.favorite_count, value.retweet_count,
-                    value.created_at, 1]
+                            value.created_at, 1]
             tweet_vector.append(single_tweet)
         tweet_vector = np.asarray(tweet_vector)
         return tweet_vector
-
-
-
-
-
-
-
-
-
-

@@ -1,6 +1,7 @@
-from tweets_scraper import Scraper
+from tweets_scraper import TweetScraper
 import datetime
 from database import Database
+
 
 def main():
     api = "fJ2XGVLLTGFcmzNO6Q4LsCfzi"
@@ -11,7 +12,7 @@ def main():
 
     date = datetime.date(2019, 6, 19)
     end_date = datetime.date(2019, 6, 26)
-    api = Scraper(api, api_secret, access_token, acesss_token_secret)
+    api = TweetScraper(api, api_secret, access_token, acesss_token_secret)
     value = api.search("bitcoin")
     db_vector_column_name = ["username", "text", "favorite_count", "retweet_count", "created_at", "nlp_score"]
     db_vector_column_type = ["VARCHAR", "VARCHAR", "INTEGER", "INTEGER", "DATE", "SMALLINT"]
