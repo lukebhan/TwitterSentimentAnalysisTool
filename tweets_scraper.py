@@ -1,7 +1,6 @@
 import tweepy
 import numpy as np
-
-
+import time
 class TweetScraper:
     # initialize tweepy with account without access token required
     def __init__(self, consumer_key, consumer_secret, access_token=None, access_token_secret=None):
@@ -39,11 +38,63 @@ class TweetScraper:
             return self.api.search(query, tweet_mode='extended')
 
     @staticmethod
-    def data_processing(data):
+    # create vector for tweets
+    def tweet_data_processing(data):
         tweet_vector = []
         for value in data:
             single_tweet = [value.user.screen_name, value.full_text, value.favorite_count, value.retweet_count,
-                            value.created_at, 1]
+                            value.created_at, value.user.entities.followers_count, 1]
             tweet_vector.append(single_tweet)
         tweet_vector = np.asarray(tweet_vector)
         return tweet_vector
+
+    @staticmethod
+    # process whether a user is actually a valuable user
+    def user_processing(self, user_list, important_users):
+        for user in user_list:
+            # insert user specification
+            # for example:
+            # if(self.api.followers(user) > 10000
+            important_users.append(user)
+        return important_users
+
+    # gather a users lists members
+    def list_members(self, user, slug):
+        members = []
+        # we set a time.sleep so that we dont go over the rate limit
+        time.sleep(60)
+        for page in tweepy.Cursor(self.api.list_members, user, slug).items():
+            members.append(page)
+        return [m.screen_name for m in members]
+
+    def get_valuable_users(self, base_user):
+        lists = self.users_lists(base_user)
+        valuable_users = []
+        seen = set(valuable_users)
+        for item in lists:
+            slug = self.get_list_slug(item)
+            print(slug)
+            users = self.list_members(base_user, slug)
+            for user in users:
+                print(user)
+                if user not in seen:
+                    seen.add(user)
+                    valuable_users.append(user)
+        return valuable_users
+
+    # gather a users lists
+    def users_lists(self, user):
+        lists = []
+        for list in self.api.lists_all(user):
+            if list.user.screen_name == user:
+                lists.append(list)
+        return lists
+
+    @staticmethod
+    # helper method to return a lists slug
+    def get_list_slug(list_item):
+        return list_item.slug
+
+
+
+
