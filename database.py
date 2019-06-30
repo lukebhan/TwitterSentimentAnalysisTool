@@ -1,9 +1,10 @@
 import psycopg2
 
+
 class Database:
     # constructor to initialize connection
     def __init__(self, user, password, host, port):
-        self.connection = psycopg2.connect(user = user, password = password, host = host, port = port)
+        self.connection = psycopg2.connect(user=user, password=password, host=host, port=port)
         self.cursor = self.connection.cursor()
         self.cursor.execute("SELECT version();")
         record = self.cursor.fetchone()
@@ -28,17 +29,19 @@ class Database:
 
     def insert_data(self, name, column_name, data):
         if len(data.shape) > 1:
-             for vector in data:
-                 table_command = "INSERT INTO " + name + "("
-                 for item in column_name:
-                     table_command += item + ", "
-                 table_command = table_command[:-2]
-                 table_command += ") VALUES ('"
-                 for value in vector:
-                     table_command += str(value).replace("'","") + "', '"
-                 table_command = table_command[:-3]
-                 table_command += ");"
-                 self.cursor.execute(table_command)
+            for vector in data:
+                table_command = "INSERT INTO " + name + "("
+                for item in column_name:
+                    table_command += item + ", "
+                table_command = table_command[:-2]
+                table_command += ") VALUES ('"
+                for value in vector:
+                    table_command += str(value).replace("'", "") + "', '"
+                table_command = table_command[:-3]
+                table_command += ");"
+                self.cursor.execute(table_command)
+        elif len(data.shape) == 0:
+            print("no tweets in data")
         else:
             table_command = "INSERT INTO " + name + "("
             for name in column_name:
@@ -51,15 +54,3 @@ class Database:
             table_command = table_command[:-3]
             table_command += ");"
             self.cursor.execute(table_command)
-
-
-
-
-
-
-
-
-
-
-
-

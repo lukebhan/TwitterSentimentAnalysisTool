@@ -25,12 +25,11 @@ def main():
     # Gather tweets from users
     keyword = 'litecoin'
     tweets = []
+    print(users)
     for user in users:
         tweets = api.search(keyword, user)
-        for tweet in tweets:
-            time.sleep(20)
-            print("Tweet Value for " + user + ": " + tweet)
-            tweets.append(tweet)
+        time.sleep(1)
+    print(tweets[0])
 
     # Parse tweets into categorical vectors
     data = api.tweet_data_processing(tweets)

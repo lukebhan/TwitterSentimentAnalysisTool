@@ -43,7 +43,7 @@ class TweetScraper:
         tweet_vector = []
         for value in data:
             single_tweet = [value.user.screen_name, value.full_text, value.favorite_count, value.retweet_count,
-                            value.created_at, value.user.entities.followers_count, 1]
+                            value.created_at, value.user.followers_count, 1]
             tweet_vector.append(single_tweet)
         tweet_vector = np.asarray(tweet_vector)
         return tweet_vector
@@ -62,7 +62,7 @@ class TweetScraper:
     def list_members(self, user, slug):
         members = []
         # we set a time.sleep so that we dont go over the rate limit
-        time.sleep(60)
+        time.sleep(69)
         for page in tweepy.Cursor(self.api.list_members, user, slug).items():
             members.append(page)
         return [m.screen_name for m in members]
@@ -70,11 +70,14 @@ class TweetScraper:
     def get_valuable_users(self, base_user):
         lists = self.users_lists(base_user)
         valuable_users = []
+        count = 1
         seen = set(valuable_users)
         for item in lists:
+            print(str(count) + "/" + str(len(lists)))
             slug = self.get_list_slug(item)
             print(slug)
             users = self.list_members(base_user, slug)
+            count += 1
             for user in users:
                 print(user)
                 if user not in seen:
