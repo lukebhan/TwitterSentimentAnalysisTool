@@ -2,6 +2,7 @@ from tweets_scraper import TweetScraper
 import datetime
 from database import Database
 import time
+import csv
 
 
 def main():
@@ -13,20 +14,33 @@ def main():
 
     # Gather users
     api = TweetScraper(api, api_secret, access_token, acesss_token_secret)
-    users = api.get_valuable_users('Scobleizer')
-
-    # Instantiate DB
+    # users = api.get_valuable_users('Scobleizer')
+    #
+    # # Instantiate DB
     db_vector_column_name = ["username", "text", "favorite_count", "retweet_count", "created_at", "followers",
                              "nlp_score"]
     db_vector_column_type = ["VARCHAR", "VARCHAR", "INTEGER", "INTEGER", "DATE", "INTEGER", "SMALLINT"]
     db = Database("luke", "password", "0.0.0.0", "5432")
-    db.create_table("litecoin", db_vector_column_name, db_vector_column_type)
+    # db.create_table("litecoin", db_vector_column_name, db_vector_column_type)
+    #
 
-    # Gather tweets from users
+    # Put Tweet users in CSV
+    # with open("output.csv", 'w') as resultFile:
+    #     wr = csv.writer(resultFile, dialect='excel')
+    #     wr.writerows(users)
+
+    # Gather users from csv
+    with open('output.csv', newline='') as csvFile:
+        data = list(csv.reader(csvFile))
+    # # Gather tweets from users
+    users = data[:50]
     keyword = 'litecoin'
     tweets = []
-    print(users)
-    for user in users:
+    count = 0
+
+    for user in users[0]:
+        count += 1
+        print(str(count) + "/" + str(len(users[0])))
         tweets = api.search(keyword, user)
         time.sleep(1)
     print(tweets[0])
