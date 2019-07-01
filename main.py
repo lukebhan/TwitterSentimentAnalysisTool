@@ -1,8 +1,7 @@
 from tweets_scraper import TweetScraper
-import datetime
 from database import Database
-import time
 import csv
+from training_set import Training
 
 
 def main():
@@ -30,25 +29,26 @@ def main():
     #     wr.writerows(users)
 
     # Gather users from csv
-    with open('output.csv', newline='') as csvFile:
-        data = list(csv.reader(csvFile))
-    # # Gather tweets from users
-    users = data[:50]
-    keyword = 'litecoin'
-    tweets = []
-    count = 0
-
-    for user in users[0]:
-        count += 1
-        print(str(count) + "/" + str(len(users[0])))
-        tweets = api.search(keyword, user)
-        time.sleep(1)
-    print(tweets[0])
-
-    # Parse tweets into categorical vectors
-    data = api.tweet_data_processing(tweets)
-    db.insert_data('litecoin', db_vector_column_name, data)
-
+    # with open('output.csv', newline='') as csvFile:
+    #     data = list(csv.reader(csvFile))
+    # # # Gather tweets from users
+    # users = data[:50]
+    # keyword = 'litecoin'
+    # tweets = []
+    # count = 0
+    #
+    # for user in users[0]:
+    #     count += 1
+    #     print(str(count) + "/" + str(len(users[0])))
+    #     tweets = api.search(keyword, user)
+    # print(tweets[0])
+    #
+    # # Parse tweets into categorical vectors
+    # data = api.tweet_data_processing(tweets)
+    # db.insert_data('litecoin', db_vector_column_name, data)
+    training = Training('corpus.csv', api)
+    training.gather_tweet_text()
+    training.place_tweets_in_database(db)
 
 if __name__ == "__main__":
     main()

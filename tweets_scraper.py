@@ -1,15 +1,17 @@
 import tweepy
 import numpy as np
 import time
+
+
 class TweetScraper:
     # initialize tweepy with account without access token required
     def __init__(self, consumer_key, consumer_secret, access_token=None, access_token_secret=None):
         auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
         if access_token is None:
-            self.api = tweepy.API(auth)
+            self.api = tweepy.API(auth, wait_on_rate_limit=True)
         else:
             auth.set_access_token(access_token, access_token_secret)
-            self.api = tweepy.API(auth)
+            self.api = tweepy.API(auth, wait_on_rate_limit=True)
 
     # search with keyword, user, and date objects
     def search(self, keyword, user=None, start_date=None, end_date=None):
@@ -61,8 +63,6 @@ class TweetScraper:
     # gather a users lists members
     def list_members(self, user, slug):
         members = []
-        # we set a time.sleep so that we dont go over the rate limit
-        time.sleep(69)
         for page in tweepy.Cursor(self.api.list_members, user, slug).items():
             members.append(page)
         return [m.screen_name for m in members]
@@ -98,6 +98,8 @@ class TweetScraper:
     def get_list_slug(list_item):
         return list_item.slug
 
+    def get_status(self, tweet):
+        return self.api.get_status(tweet)
 
 
 
