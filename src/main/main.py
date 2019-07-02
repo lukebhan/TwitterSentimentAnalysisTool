@@ -1,7 +1,6 @@
-from tweets_scraper import TweetScraper
-from database import Database
-import csv
-from training_set import Training
+from src.scraper.tweets_scraper import TweetScraper
+from src.data.database import Database
+from src.scraper.training_set import Training
 
 
 def main():

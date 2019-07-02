@@ -1,7 +1,8 @@
 import re
-from ntlk.tokenize import word_tokenize
+from nltk.tokenize import word_tokenize
 from string import punctuation
 from nltk.corpus import stopwords
+
 
 class Processor:
     def __init__(self):
@@ -16,4 +17,10 @@ class Processor:
         return [word for word in tweet if word not in self._stopwords]
 
     def process_tweet_list(self, tweet_list):
+        processed_tweets = []
+        for tweet in tweet_list:
+            tweet = self.process_tweet(tweet)
+            processed_tweets.append(tweet)
+        return processed_tweets
+
 
