@@ -36,7 +36,7 @@ class Database:
                 table_command = table_command[:-2]
                 table_command += ") VALUES ('"
                 for value in vector:
-                    table_command += str(value).replace("'", "") + "', '"
+                    table_command += str(value).replace("\'", "") + "', '"
                 table_command = table_command[:-3]
                 table_command += ");"
                 self.cursor.execute(table_command)
@@ -49,8 +49,7 @@ class Database:
             table_command = table_command[:-2]
             table_command += ") VALUES ('"
             for value in data:
-                table_command += str(value).replace('\'', '') + ", '"
-            print(table_command)
+                table_command += str(value).replace('\'', '') + "', '"
             table_command = table_command[:-3]
             table_command += ");"
             self.cursor.execute(table_command)

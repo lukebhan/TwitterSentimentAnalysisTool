@@ -24,6 +24,8 @@ class Training:
                 count += 1
                 status = self.api.get_status(tweet["tweet_id"])
                 print(str(count) + "/" + str(len(self.training_data_ids)) + " Tweet fetched: " + status.text)
+                tweet['text'] = status.text
+                print(tweet)
                 self.training_data_set.append(tweet)
             except tweepy.TweepError as e:
                 continue
@@ -33,5 +35,6 @@ class Training:
         db_vector_column_type = ["VARCHAR", "VARCHAR", "VARCHAR", "VARCHAR"]
         db.create_table(self.db_name, db_vector_column_name, db_vector_column_type)
         for tweet in self.training_data_set:
-            data = [tweet["text"], tweet["label"], tweet["topic"], tweet["tweet_id"]]
+            print(tweet)
+            data = [tweet['text'], tweet['label'], tweet['topic'], tweet['tweet_id']]
             db.insert_data(self.db_name, db_vector_column_name, np.asarray(data))

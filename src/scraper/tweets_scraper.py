@@ -1,19 +1,22 @@
 import tweepy
-import numpy as np
-import time
 
 
+# class handles all twitter scraping necessary
+# all rates are out of 15 minute windows
 class TweetScraper:
-    # initialize tweepy with account without access token required
+    # connect to twitter api with account
     def __init__(self, consumer_key, consumer_secret, access_token=None, access_token_secret=None):
         auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+        # does not use access token
         if access_token is None:
             self.api = tweepy.API(auth, wait_on_rate_limit=True)
+        # uses required auth access tokens
         else:
             auth.set_access_token(access_token, access_token_secret)
             self.api = tweepy.API(auth, wait_on_rate_limit=True)
 
     # search with keyword, user, and date objects
+    # Rate: 180 calls per window
     def search(self, keyword, user=None, start_date=None, end_date=None):
         # search with just user and dates
         if keyword is None:
@@ -32,41 +35,22 @@ class TweetScraper:
             query = keyword + "(from:" + user + ")(to:" + user + ")"
             return self.api.search(query, tweet_mode='extended')
 
-        # search with everything
+        # search with user, keyword, and dates
         else:
             query = keyword + "(from:" + user + ")(to:" + user + ")since:" + str(start_date.year) + "-" + str(
                 start_date.month) + "-" + str(start_date.day) + "until:" + str(end_date.year) + "-" + str(
                 end_date.month) + "-" + str(end_date.day)
             return self.api.search(query, tweet_mode='extended')
 
-    @staticmethod
-    # create vector for tweets
-    def tweet_data_processing(data):
-        tweet_vector = []
-        for value in data:
-            single_tweet = [value.user.screen_name, value.full_text, value.favorite_count, value.retweet_count,
-                            value.created_at, value.user.followers_count, 1]
-            tweet_vector.append(single_tweet)
-        tweet_vector = np.asarray(tweet_vector)
-        return tweet_vector
-
-    @staticmethod
-    # process whether a user is actually a valuable user
-    def user_processing(self, user_list, important_users):
-        for user in user_list:
-            # insert user specification
-            # for example:
-            # if(self.api.followers(user) > 10000
-            important_users.append(user)
-        return important_users
-
-    # gather a users lists members
+    # gather a users lists members (helper method to get valuable users)
+    # Rate: 75
     def list_members(self, user, slug):
         members = []
         for page in tweepy.Cursor(self.api.list_members, user, slug).items():
             members.append(page)
         return [m.screen_name for m in members]
 
+    #
     def get_valuable_users(self, base_user):
         lists = self.users_lists(base_user)
         valuable_users = []

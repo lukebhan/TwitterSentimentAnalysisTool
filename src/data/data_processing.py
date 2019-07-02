@@ -2,6 +2,7 @@ import re
 from nltk.tokenize import word_tokenize
 from string import punctuation
 from nltk.corpus import stopwords
+import numpy as np
 
 
 class Processor:
@@ -23,4 +24,24 @@ class Processor:
             processed_tweets.append(tweet)
         return processed_tweets
 
+    @staticmethod
+    # create vector for tweets
+    def tweet_data_processing(data):
+        tweet_vector = []
+        for value in data:
+            single_tweet = [value.user.screen_name, value.full_text, value.favorite_count, value.retweet_count,
+                            value.created_at, value.user.followers_count, 1]
+            tweet_vector.append(single_tweet)
+        tweet_vector = np.asarray(tweet_vector)
+        return tweet_vector
+
+    @staticmethod
+    # process whether a user is actually a valuable user
+    def user_processing(self, user_list, important_users):
+        for user in user_list:
+            # insert user specification
+            # for example:
+            # if(self.api.followers(user) > 10000
+            important_users.append(user)
+        return important_users
 
