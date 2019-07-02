@@ -50,12 +50,15 @@ class TweetScraper:
             members.append(page)
         return [m.screen_name for m in members]
 
-    #
+    # Method takes a user - gathers their lists and then compiles all members in those lists
+    # Rate: 15 lists, 75 members
     def get_valuable_users(self, base_user):
+        # gather users lists
         lists = self.users_lists(base_user)
         valuable_users = []
         count = 1
         seen = set(valuable_users)
+        # adds members of lists into a set. Does not repeat users
         for item in lists:
             print(str(count) + "/" + str(len(lists)))
             slug = self.get_list_slug(item)
@@ -70,6 +73,7 @@ class TweetScraper:
         return valuable_users
 
     # gather a users lists
+    # Rate: 15
     def users_lists(self, user):
         lists = []
         for list in self.api.lists_all(user):
@@ -82,6 +86,7 @@ class TweetScraper:
     def get_list_slug(list_item):
         return list_item.slug
 
+    # Returns the text of a tweet id
     def get_status(self, tweet):
         return self.api.get_status(tweet)
 

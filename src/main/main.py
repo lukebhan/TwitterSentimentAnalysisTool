@@ -45,7 +45,7 @@ def main():
     # # Parse tweets into categorical vectors
     # data = api.tweet_data_processing(tweets)
     # db.insert_data('litecoin', db_vector_column_name, data)
-    training = Training('src/scraper/input_lists/corpus.csv', api)
+    training = Training('src/scraper/input_list/corpus.csv', api)
     training.gather_tweet_text()
     training.place_tweets_in_database(db)
 
