@@ -5,10 +5,13 @@ from nltk.corpus import stopwords
 import numpy as np
 
 
+# processes tweets before placing them into the database
 class Processor:
+    # creates remove_words set on initialization
     def __init__(self):
         self.remove_words = set(stopwords.word('english') + list(punctuation) + ['AT_USER', 'URL'])
 
+    # Removes urls, @users, and punctuation
     def process_tweet(self, tweet):
         tweet = tweet.lower()
         tweet = re.sub('((www\.[^\s]+)|(https?://[^\s]+))', 'URL', tweet) # remove URLs
@@ -17,6 +20,7 @@ class Processor:
         tweet = word_tokenize(tweet) # remove repeated characters (helloooooooo into hello)
         return [word for word in tweet if word not in self._stopwords]
 
+    # iterates through a list of tweets to process each one
     def process_tweet_list(self, tweet_list):
         processed_tweets = []
         for tweet in tweet_list:

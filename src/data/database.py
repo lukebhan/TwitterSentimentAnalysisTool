@@ -1,6 +1,7 @@
 import psycopg2
 
 
+# Database for handling postgres communication
 class Database:
     # constructor to initialize connection
     def __init__(self, user, password, host, port):
@@ -27,7 +28,9 @@ class Database:
         table_command += ");"
         self.cursor.execute(table_command)
 
+    # inserts data into a table
     def insert_data(self, name, column_name, data):
+        # if data is a list
         if len(data.shape) > 1:
             for vector in data:
                 table_command = "INSERT INTO " + name + "("
@@ -40,8 +43,10 @@ class Database:
                 table_command = table_command[:-3]
                 table_command += ");"
                 self.cursor.execute(table_command)
+        # if data is empty simply ignore
         elif len(data.shape) == 0:
             print("no tweets in data")
+        # if only one item is added
         else:
             table_command = "INSERT INTO " + name + "("
             for name in column_name:
