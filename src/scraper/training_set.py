@@ -14,7 +14,8 @@ class Training:
     # initialize by opening the already classified training data with ids and add to id's list
     def __init__(self, path, api):
         self.api = api
-        with open(path, 'r') as csvFile:
+        self.path = path
+        with open(self.path, 'r') as csvFile:
             line_reader = csv.reader(csvFile, delimiter=',', quotechar="\"")
             for row in line_reader:
                 self.training_data_ids.append(
@@ -42,3 +43,13 @@ class Training:
         for tweet in self.training_data_set:
             data = [tweet['text'], tweet['label'], tweet['topic'], tweet['tweet_id']]
             db.insert_data(self.db_name, db_vector_column_name, np.asarray(data))
+
+    # use for custom csv files that already have the text given rather than tweet ids
+    def gather_custom_tweet_text(self):
+        with open(self.path, 'r') as csvFile:
+            line_reader = csv.reader(csvFile, delimiter=',', quotechar="\"")
+            for row in line_reader:
+                self.training_data_ids['text'] = row[3]
+
+
+
