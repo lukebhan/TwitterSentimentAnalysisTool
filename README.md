@@ -29,5 +29,4 @@ and see the customized method in training_set.py. This should build a training s
 the custom values, but its imperative if you don't have any id values to leave the 3rd column blank and put 
 text in the fourth column
 
-
- 
+**Building a Test Set of Tweets:**

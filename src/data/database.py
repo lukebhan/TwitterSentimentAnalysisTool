@@ -13,9 +13,9 @@ class Database:
 
     # destructor to commit changes to database
     def __del__(self):
-        self.connection.commit();
-        self.connection.close();
-        self.cursor.close();
+        self.connection.commit()
+        self.connection.close()
+        self.cursor.close()
 
     # creates a tables with the input name and with the vector size of the name and type params
     def create_table(self, name, column_name, column_type):
@@ -59,3 +59,29 @@ class Database:
             table_command += ");"
             self.cursor.execute(table_command)
 
+    # Returns number of rows in a specific column
+    def num_rows(self, table_name, column_name):
+        table_command = "SELECT COUNT(" + column_name + ") FROM " + table_name
+        return self.cursor.execute(table_command)
+
+    # updates column with a data score. Takes data in as a list of dictionaries
+    def update_column(self, table_name, column_name, data):
+        for value in data:
+            if value["nlp_score"] is None:
+                self.delete_row(table_name, value["text"])
+            else:
+                table_command = "UPDATE " + table_name + " SET " + column_name + " = " + value["nlp_score"] + \
+                                " WHERE text = " + value["text"]
+                self.cursor.execute(table_command)
+
+    # creates a new column and adds data into it
+    def create_column(self, table_name, column_name, data, type):
+        table_command = "ALTER TABLE " + table_name + "ADD COLUMN " + column_name + " " + type
+        self.cursor.execute(table_command)
+        for value in data:
+            self.insert_data(table_name, column_name, value)
+
+    # deletes a row (helper method for updating column's with nlp scores)
+    def delete_row(self, table_name, text):
+        table_command = "DELETE FROM " + table_name + " WHERE text=" + text
+        self.cursor.execute(table_command)
