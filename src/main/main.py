@@ -1,7 +1,7 @@
 from src.scraper.tweets_scraper import TweetScraper
 from src.data.database import Database
-from src.scraper.training_set import Training
-
+from src.data.data_processing import Processor
+import numpy as np
 
 def main():
     api = "fJ2XGVLLTGFcmzNO6Q4LsCfzi"
@@ -45,9 +45,13 @@ def main():
     # # Parse tweets into categorical vectors
     # data = api.tweet_data_processing(tweets)
     # db.insert_data('litecoin', db_vector_column_name, data)
-    training = Training('src/scraper/input_list/corpus.csv', api)
-    training.gather_tweet_text()
-    training.place_tweets_in_database(db)
+    user = db.get_column_data('training_set', 'text')
+    processor = Processor()
+    processed = processor.process_tweet_list(user)
+    db.create_column("training_set", "processed_tweets", processed, "VARCHAR")
+
+
+
 
 if __name__ == "__main__":
     main()

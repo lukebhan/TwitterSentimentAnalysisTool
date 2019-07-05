@@ -1,5 +1,6 @@
 import re
 from nltk.tokenize import word_tokenize
+import nltk
 from string import punctuation
 from nltk.corpus import stopwords
 import numpy as np
@@ -9,16 +10,16 @@ import numpy as np
 class Processor:
     # creates remove_words set on initialization
     def __init__(self):
-        self.remove_words = set(stopwords.word('english') + list(punctuation) + ['AT_USER', 'URL'])
+        self.remove_words = set(stopwords.words('english') + list(punctuation) + ['AT_USER', 'URL'])
 
     # Removes urls, @users, and punctuation
     def process_tweet(self, tweet):
-        tweet = tweet.lower()
+        tweet = str(tweet).lower()
         tweet = re.sub('((www\.[^\s]+)|(https?://[^\s]+))', 'URL', tweet) # remove URLs
         tweet = re.sub('@[^\s]+', 'AT_USER', tweet) # remove usernames
         tweet = re.sub(r'#([^\s]+)', r'\1', tweet) # remove the # in #hashtag
         tweet = word_tokenize(tweet) # remove repeated characters (helloooooooo into hello)
-        return [word for word in tweet if word not in self._stopwords]
+        return [word for word in tweet if word not in self.remove_words]
 
     # iterates through a list of tweets to process each one
     def process_tweet_list(self, tweet_list):
