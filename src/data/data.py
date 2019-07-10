@@ -1,10 +1,19 @@
-# Data Class: This class holds a dictionary of tweets for quick access
+# Data Class: This class holds a dictionary of tweets for quick access via index
+# Written by Luke Bhan
+# Last Updated: 7/9/19
 
 
 class Data:
+    # Default Constructor
     def __init__(self):
         self.data = {}
         self.count = 1
+
+    # Prints every tweet in dictionary
+    def __str__(self):
+        for attribute in self.data:
+            print(self.data[attribute])
+        return ""
 
     def insert_data(self, tweet):
         self.data[self.count] = tweet

@@ -1,7 +1,10 @@
 # Tweet Class: This class creates fast variable access for holding various tweet attributes as well as parsing tweets
+# Written by Luke Bhan
+# Last Updated: 7/9/19
 
 
 class Tweet:
+    # Default Constructor
     def __init__(self):
         self.text = None
         self.user = None
@@ -12,16 +15,19 @@ class Tweet:
         self.nlp_score = None
         self.given_score = None
 
+    # Prints All Tweet Attributes
     def __str__(self):
         attributes = " "
         for attribute in self.__dict__:
             attributes += attribute + ": " + str(self.__dict__[attribute]) + " "
         return attributes[1:]
 
+    # Insert Custom Attributes to class dict. Properties act as default properties
     def insert_custom_value(self, name, value):
         dict = {name: value}
         self.__dict__.update(dict)
 
+    # Remove Custom Attribute
     def remove_custom_value(self, name):
         del self.__dict__[name]
 
@@ -49,6 +55,7 @@ class Tweet:
     def add_follower_count(self, count):
         self.follower_count = count
 
+    # Parses json data to add tweet attributes
     def add_tweet(self, tweet):
         self.add_user(tweet.user.screen_name)
         self.add_creation_date(tweet.created_at)

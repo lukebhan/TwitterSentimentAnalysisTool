@@ -101,7 +101,6 @@ class TweetScraper:
             tweet_obj.add_tweet(tweet)
             tweet_list.insert_data(tweet_obj)
             tweet_obj.insert_custom_value("value", "test")
-            print(tweet_obj)
         return tweet_list
 
 
