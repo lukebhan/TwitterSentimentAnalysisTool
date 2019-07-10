@@ -56,10 +56,31 @@ class Tweet:
         self.follower_count = count
 
     # Parses json Obj to add tweet attributes
-    def add_tweet(self, tweet):
+    def add_tweet_json(self, tweet):
         self.add_user(tweet.user.screen_name)
         self.add_creation_date(tweet.created_at)
         self.add_favorite_count(tweet.favorite_count)
         self.add_retweet_count(tweet.retweet_count)
         self.add_text(tweet.full_text)
         self.add_follower_count(tweet.user.followers_count)
+
+    # adds tweet from input without scores
+    def add_tweet_noscore(self, text, user, favorite_count, reteweet_count, follower_count, date):
+        self.add_user(user)
+        self.add_creation_date(date)
+        self.add_favorite_count(favorite_count)
+        self.add_retweet_count(reteweet_count)
+        self.add_text(text)
+        self.add_follower_count(follower_count)
+
+    # adds tweet from inputs with scores
+    def add_tweet(self, text, user, favorite_count, reteweet_count, follower_count, date, nlp_score, given_score):
+        self.add_user(user)
+        self.add_creation_date(date)
+        self.add_favorite_count(favorite_count)
+        self.add_retweet_count(reteweet_count)
+        self.add_text(text)
+        self.add_follower_count(follower_count)
+        self.add_nlp_score(nlp_score)
+        self.add_given_score(given_score)
+

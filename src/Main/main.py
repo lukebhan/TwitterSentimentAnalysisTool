@@ -12,10 +12,7 @@ def main():
 
     # Gather users
     api = TweetScraper(api, api_secret, access_token, acesss_token_secret)
-    data = api.get_valuable_users("alex_feeley")
-    csv_converter = CSV()
-    csv_converter.write_userlist_to_csv(data)
-    print(csv_converter.read_userlist_from_csv("src/Database/output/userlist.csv"))
+    data = api.search("tesla", "elonmusk")
 
     db = Database('luke', 'password', '127.0.0.1', '5432')
     db_column_name = ['Id', 'Text', 'Username', 'Favorite_Count', 'Retweet_Count', 'Follower_Count', 'Date', 'Nlp_Score',

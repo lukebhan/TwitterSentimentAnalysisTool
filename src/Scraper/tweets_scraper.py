@@ -97,7 +97,7 @@ class TweetScraper:
         tweet_list = Data()
         for tweet in data:
             tweet_obj = Tweet()
-            tweet_obj.add_tweet(tweet)
+            tweet_obj.add_tweet_json(tweet)
             tweet_list.insert_data(tweet_obj)
         return tweet_list
 
