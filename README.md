@@ -2,12 +2,23 @@
  Tool for analyzing twitter data. Includes an auto build neural net classifier and the 
  ability to create one's own classifier based on preclassified input data.
  Auto scrapes Tweets and auto gathers users. Comes prebuilt with a docker postgres server managed by pgadmin
- Includes graphical code to analyze and categorize data
+ Includes graphical visuals to analyze and categorize data
  
- **Instructions for Use:**
- 1. clone project
- 2. Run the main.py and follow the directions
+ **Instructions for Use:** 
+ 
+**Docker:**
 
+Recommended: Auto-installs dependencies, Allows quick build of tweet objects, auto creates training 
+and test sets, allows for easy classification of test set. Lacks customization
+1. To use with docker, please download docker here (https://docs.docker.com/v17.12/install/) for your machine.
+2. Next, install docker compose here (https://docs.docker.com/compose/install/)
+3. Open your favorite terminal and run the following 
+    
+    a. cd sentimentAnalysis/Docker (navigate to docker folder) <br />
+    b. sudo docker-compose build (optional, but recommended) <br />
+    c. sudo docker-compose up
+4. Follow instructions in terminal 
+    
 **Advanced Usage:**
 
 **Docker:**
