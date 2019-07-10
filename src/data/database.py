@@ -1,5 +1,6 @@
 import psycopg2
 
+
 # Database for handling postgres communication
 class Database:
     # constructor to initialize connection
@@ -27,10 +28,6 @@ class Database:
         table_command += ");"
         self.cursor.execute(table_command)
 
-    # inserts data into a table
-    def insert_data(self, name, column_name, data):
-
-
     # Returns number of rows in a specific column
     def num_rows(self, table_name, column_name):
         table_command = "SELECT COUNT(" + column_name + ") FROM " + table_name
@@ -50,7 +47,7 @@ class Database:
         self.cursor.execute(table_command)
         if type(data) is list:
             for value in data:
-                self.insert_array(table_name,column_name, value)
+                self.insert_array(table_name, column_name, value)
         else:
             for value in data:
                 self.insert_data(table_name, column_name, value)

@@ -1,4 +1,6 @@
 import tweepy
+from src.data.tweet import Tweet
+from src.data.data import Data
 
 
 # class handles all twitter scraping necessary
@@ -23,24 +25,24 @@ class TweetScraper:
             query = "(from:" + user + ")(to:" + user + ")since:" + str(start_date.year) + "-" + str(
                 start_date.month) + "-" + str(start_date.day) + "until:" + str(end_date.year) + "-" + str(
                 end_date.month) + "-" + str(end_date.day)
-            return self.api.search(query, tweet_mode='extended')
+            return self.parse_tweets(self.api.search(query, tweet_mode='extended'))
 
         # search with just a keyword
         elif user is None:
             query = keyword
-            return self.api.search(query, tweet_mode='extended')
+            return self.parse_tweets(self.api.search(query, tweet_mode='extended'))
 
         # search with just keyword and user
         elif start_date is None:
             query = keyword + "(from:" + user + ")(to:" + user + ")"
-            return self.api.search(query, tweet_mode='extended')
+            return self.parse_tweets(self.api.search(query, tweet_mode='extended'))
 
         # search with user, keyword, and dates
         else:
             query = keyword + "(from:" + user + ")(to:" + user + ")since:" + str(start_date.year) + "-" + str(
                 start_date.month) + "-" + str(start_date.day) + "until:" + str(end_date.year) + "-" + str(
                 end_date.month) + "-" + str(end_date.day)
-            return self.api.search(query, tweet_mode='extended')
+            return self.parse_tweets(self.api.search(query, tweet_mode='extended'))
 
     # gather a users lists members (helper method to get valuable users)
     # Rate: 75
@@ -81,14 +83,27 @@ class TweetScraper:
                 lists.append(list)
         return lists
 
+    # Returns the text of a tweet id
+    def get_status(self, tweet):
+        return self.api.get_status(tweet)
+
     @staticmethod
     # helper method to return a lists slug
     def get_list_slug(list_item):
         return list_item.slug
 
-    # Returns the text of a tweet id
-    def get_status(self, tweet):
-        return self.api.get_status(tweet)
+    # helper method to transform tweet into usable tweet object
+    @staticmethod
+    def parse_tweets(data):
+        tweet_list = Data()
+        for tweet in data:
+            tweet_obj = Tweet()
+            tweet_obj.add_tweet(tweet)
+            tweet_list.insert_data(tweet_obj)
+            tweet_obj.insert_custom_value("value", "test")
+            print(tweet_obj)
+        return tweet_list
+
 
 
 

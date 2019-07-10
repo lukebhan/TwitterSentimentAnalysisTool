@@ -1,12 +1,13 @@
 # Data Class: This class holds a dictionary of tweets for quick access
 
+
 class Data:
     def __init__(self):
         self.data = {}
         self.count = 1
 
-    def insert_data(self, value):
-        self.data[self.count] = value
+    def insert_data(self, tweet):
+        self.data[self.count] = tweet
         self.count += 1
 
     def remove_last(self):
