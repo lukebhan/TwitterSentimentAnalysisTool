@@ -1,4 +1,4 @@
-# sentimentAnalysisTool
+# TwitterSentimentAnalysisTool (TSAT)
  Tool for analyzing twitter data. Includes an auto build neural net classifier and the 
  ability to create one's own classifier based on preclassified input data.
  Auto scrapes Tweets and auto gathers users. Comes prebuilt with a docker postgres server managed by pgadmin
