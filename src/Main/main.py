@@ -1,5 +1,6 @@
 from src.Scraper.tweets_scraper import TweetScraper
 from src.Database.database import Database
+from src.Database.data_to_csv import CSV
 
 
 def main():
@@ -11,13 +12,15 @@ def main():
 
     # Gather users
     api = TweetScraper(api, api_secret, access_token, acesss_token_secret)
-    data = api.search("tesla", "elonmusk")
+    data = api.get_valuable_users("alex_feeley")
+    csv_converter = CSV()
+    csv_converter.write_userlist_to_csv(data)
+    print(csv_converter.read_userlist_from_csv("src/Database/output/userlist.csv"))
 
     db = Database('luke', 'password', '127.0.0.1', '5432')
     db_column_name = ['Id', 'Text', 'Username', 'Favorite_Count', 'Retweet_Count', 'Follower_Count', 'Date', 'Nlp_Score',
                       'Given_Score']
     db_column_type = ['integer', 'VARCHAR', 'VARCHAR', 'integer', 'integer', 'integer', 'VARCHAR', 'varchar', 'INTEGER']
-    db.insert_list("test", data)
 
 
 if __name__ == "__main__":
