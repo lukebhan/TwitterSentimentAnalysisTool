@@ -1,6 +1,4 @@
 from src.scraper.tweets_scraper import TweetScraper
-from src.data.database import Database
-from src.data.data_processing import Processor
 import numpy as np
 
 def main():

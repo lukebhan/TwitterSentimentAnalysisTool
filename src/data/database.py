@@ -1,6 +1,4 @@
 import psycopg2
-import numpy as np
-
 
 # Database for handling postgres communication
 class Database:
@@ -31,49 +29,7 @@ class Database:
 
     # inserts data into a table
     def insert_data(self, name, column_name, data):
-        # if data is string
-        if type(data) is str:
-            table_command = "INSERT INTO " + name + "(" + column_name + ") VALUES (\'" +\
-                            data.replace(",", "").replace("'", "") + "\')"
-            print(table_command)
-            self.cursor.execute(table_command)
 
-        # if data is a list
-        elif len(data.shape) > 1:
-            for vector in data:
-                table_command = "INSERT INTO " + name + "("
-                for item in column_name:
-                    table_command += item + ", "
-                table_command = table_command[:-2]
-                table_command += ") VALUES ('"
-                for value in vector:
-                    table_command += str(value).replace("\'", "") + "', '"
-                table_command = table_command[:-3]
-                table_command += ");"
-                self.cursor.execute(table_command)
-        # if data is empty simply ignore
-        elif len(data.shape) == 0:
-            print("no tweets in data")
-        # if only one item is added
-        else:
-            table_command = "INSERT INTO " + name + "("
-            for name in column_name:
-                table_command += name + ", "
-            table_command = table_command[:-2]
-            table_command += ") VALUES ('"
-            for value in data:
-                table_command += str(value).replace('\'', '') + "', '"
-            table_command = table_command[:-3]
-            table_command += ");"
-            self.cursor.execute(table_command)
-
-    def insert_array(self, table_name, column_name, data):
-        str_data = ""
-        for value in data:
-            str_data += ", " + value
-        str_data = str_data[3:]
-        print(str_data)
-        self.insert_data(table_name, column_name, str_data)
 
     # Returns number of rows in a specific column
     def num_rows(self, table_name, column_name):
