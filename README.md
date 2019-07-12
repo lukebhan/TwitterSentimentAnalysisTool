@@ -38,7 +38,4 @@ This will build a set with about 5000 multi lingual classified tweets
 Place classified data in a csv with the same indexing as corpus. If the text is given just add that as a column 
 and see the customized method in training_set.py. This should build a training set with 
 the custom values, but its imperative if you don't have any id values to leave the 3rd column blank and put 
-text in the fourth column
-
-**Building a Test Set of Tweets:**
-Test
+text in the fourth columns

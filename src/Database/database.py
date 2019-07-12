@@ -1,7 +1,7 @@
 import psycopg2
 
 
-# Database for handling postgres communication
+# Class Database: Adds and removes objects from postgres
 class Database:
     # constructor to initialize connection
     def __init__(self, user, password, host, port):
