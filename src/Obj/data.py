@@ -41,3 +41,6 @@ class Data:
         for key, value in self.data.items():
             if key['text'] == text:
                 del self.data[key]
+
+    def get_tweet(self, index):
+        return self.data[index]

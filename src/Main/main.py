@@ -20,8 +20,8 @@ def main():
                       'Given_Score']
     db_column_type = ['integer', 'VARCHAR', 'VARCHAR', 'integer', 'integer', 'integer', 'VARCHAR', 'varchar', 'INTEGER']
 
-    apple = UserInterface()
-    orange = apple.classify(data.data[1].text)
+    apple = UserInterface(data)
+    orange = apple.classify()
 
 
 if __name__ == "__main__":
