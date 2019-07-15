@@ -44,3 +44,6 @@ class Data:
 
     def get_tweet(self, index):
         return self.data[index]
+
+    def get_size(self):
+        return len(self.data)

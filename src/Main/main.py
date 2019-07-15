@@ -21,7 +21,7 @@ def main():
     db_column_type = ['integer', 'VARCHAR', 'VARCHAR', 'integer', 'integer', 'integer', 'VARCHAR', 'varchar', 'INTEGER']
 
     apple = UserInterface(data)
-    orange = apple.classify()
+    apple.classify()
 
 
 if __name__ == "__main__":
