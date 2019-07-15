@@ -39,3 +39,11 @@ Place classified data in a csv with the same indexing as corpus. If the text is 
 and see the customized method in training_set.py. This should build a training set with 
 the custom values, but its imperative if you don't have any id values to leave the 3rd column blank and put 
 text in the fourth columns
+
+**Dependencies:**
+* Pandas - Version 0.24.2
+* psycopg2 - Version 2.8.3
+* Tweepy - Version 3.7.0
+* Docker - Docker Version 18.09.6
+* Docker Compose - Version 1.24.0 
+* Tkinter - Version 8.6
