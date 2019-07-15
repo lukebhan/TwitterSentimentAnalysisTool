@@ -1,6 +1,6 @@
 import pandas as pd
 from src.Obj.tweet import Tweet
-from src.Obj.data import Data
+from src.Obj.TweetList import TweetList
 
 
 # Class CSV: Handles moving data to and from csv files. This is optional by user and is included if postgres is
@@ -35,7 +35,7 @@ class CSV:
     # Returns a data object and takes in a file location of tweets
     # def read_data_from_csv(self, file_name):
     def read_data_from_csv(self, file_name):
-        data = Data()
+        data = TweetList()
         df = pd.read_csv(file_name)
         for index, row in df.iterrows():
             tweet = Tweet()

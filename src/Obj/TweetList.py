@@ -3,7 +3,7 @@
 # Last Updated: 7/9/19
 
 
-class Data:
+class TweetList:
     # Default Constructor
     def __init__(self):
         self.data = {}

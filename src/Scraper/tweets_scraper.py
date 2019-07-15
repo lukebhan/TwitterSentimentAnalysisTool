@@ -1,9 +1,11 @@
 import tweepy
 from src.Obj.tweet import Tweet
-from src.Obj.data import Data
+from src.Obj.TweetList import TweetList
 
-# class handles all twitter scraping necessary
-# all rates are out of 15 minute windows
+
+# Tweet Scrape Class: This class uses tweepy to handle twitter api's and builds tweets
+# Written by Luke Bhan
+# Last Updated: 7/15/19
 class TweetScraper:
     # connect to twitter api with account
     def __init__(self, consumer_key, consumer_secret, access_token=None, access_token_secret=None):
@@ -18,6 +20,7 @@ class TweetScraper:
 
     # search with keyword, user, and date objects
     # Rate: 180 calls per window
+    # Returns a tweet list
     def search(self, keyword, user=None, start_date=None, end_date=None):
         # search with just user and dates
         if keyword is None:
@@ -45,6 +48,7 @@ class TweetScraper:
 
     # gather a users lists members (helper method to get valuable users)
     # Rate: 75
+    # Returns a python list
     def list_members(self, user, slug):
         members = []
         for page in tweepy.Cursor(self.api.list_members, user, slug).items():
@@ -53,6 +57,7 @@ class TweetScraper:
 
     # Method takes a user - gathers their lists and then compiles all members in those lists
     # Rate: 15 lists, 75 members
+    # Returns a python list
     def get_valuable_users(self, base_user):
         # gather users lists
         lists = self.users_lists(base_user)
@@ -75,6 +80,7 @@ class TweetScraper:
 
     # gather a users lists
     # Rate: 15
+    # Returns a list status object (tweepy defined)
     def users_lists(self, user):
         lists = []
         for list in self.api.lists_all(user):
@@ -92,9 +98,10 @@ class TweetScraper:
         return list_item.slug
 
     # helper method to transform tweet into usable tweet object
+    # returns a tweet list object (Data)
     @staticmethod
     def parse_tweets(data):
-        tweet_list = Data()
+        tweet_list = TweetList()
         for tweet in data:
             tweet_obj = Tweet()
             tweet_obj.add_tweet_json(tweet)
