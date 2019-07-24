@@ -16,13 +16,18 @@ class TweetList:
             print(self.data[attribute])
         return ""
 
+    # Adds a tweet entry and returns the new size of the list, for convinience.
     def insert_data(self, tweet):
         self.data[self.count] = tweet
         self.count += 1
+        return self.count
 
+    # Removes the last tweet and returns the new size of the list, for
+    # convinience.
     def remove_last(self):
         self.data = self.data[:-1]
         self.count -= 1
+        return self.count
 
     def remove_index(self, index):
         del self.data[index]

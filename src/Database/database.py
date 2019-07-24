@@ -9,7 +9,7 @@ class Database:
         self.cursor = self.connection.cursor()
         self.cursor.execute("SELECT version();")
         record = self.cursor.fetchone()
-        print("Your are connect to - ", record)
+        print("You are connected to - ", record)
 
     # destructor to commit changes to database
     def __del__(self):
@@ -17,8 +17,8 @@ class Database:
         self.connection.close()
         self.cursor.close()
 
-    # creates a tables with the input name and with the vector size of the name and type params
-    # Takes in a string and two lists of string
+    # Creates a table with name `name` consisting of a set of column names and
+    # types. The number of column names and types must be equivalent.
     def create_table(self, name, column_name, column_type):
         if len(column_name) != len(column_type):
             raise ValueError("column names must match size of column types")
@@ -31,7 +31,6 @@ class Database:
         self.cursor.execute(table_command)
 
     # Returns number of rows in a specific column
-    # Takes in two strings
     def num_rows(self, table_name, column_name):
         table_command = "SELECT COUNT(" + column_name + ") FROM " + table_name
         return self.cursor.execute(table_command)
@@ -60,7 +59,7 @@ class Database:
         self.cursor.execute(table_command)
         return self.cursor.fetchall()
 
-    # gets row data and returns as a tweet
+    # gets row data and returns it as a tweet
     def get_row_data(self, table_name, id):
         table_command = "SELECT * WHERE id = " + id
         self.cursor.execute(table_command)
@@ -72,7 +71,7 @@ class Database:
             table_command = "INSERT into {0}" \
                             " VALUES ({1}, '{2}', '{3}', {4}, {5}, {6}, '{7}', '{8}', '{9}')".format(table_name, str(id),
                                                                                       self.check_none(tweet.text).replace(
-                                                                                          "'", ""),
+                                                                                          "'", ""), # discard single quotes
                                                                                       self.check_none(tweet.user),
                                                                                       self.check_none(tweet.retweet_count),
                                                                                       self.check_none(tweet.favorite_count),

@@ -16,7 +16,7 @@ class PreProcessing:
         return processed_tweets
 
     def process_tweet(self, tweet):
-        tweet = tweet.lower()  # convert text to lower-case
+        tweet = tweet.lower()
         tweet = re.sub('((www\.[^\s]+)|(https?://[^\s]+))', 'URL', tweet)  # remove URLs
         tweet = re.sub('@[^\s]+', 'AT_USER', tweet)  # remove usernames
         tweet = re.sub(r'#([^\s]+)', r'\1', tweet)  # remove the # in #hashtag

@@ -1,4 +1,5 @@
-# Tweet Class: This class creates fast variable access for holding various tweet attributes as well as parsing tweets
+# Tweet Class: This class creates fast variable access for holding various tweet
+# attributes as well as parsing tweets.
 # Written by Luke Bhan
 # Last Updated: 7/9/19
 
