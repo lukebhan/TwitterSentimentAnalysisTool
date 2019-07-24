@@ -24,19 +24,19 @@ class TweetScraper:
     def search(self, keyword, user=None, start_date=None, end_date=None):
         # search with just a keyword
         if user is None:
-            query = keyword
+            query = keyword + " -RT"
             return self.parse_tweets(self.api.search(query, tweet_mode='extended'))
 
         # search with just keyword and user
         elif start_date is None and end_date is None:
-            query = keyword + "(from:" + user + ")(to:" + user + ")"
+            query = keyword + "(from:" + user + ")(to:" + user + ")" + " -RT"
             return self.parse_tweets(self.api.search(query, tweet_mode='extended'))
 
         # search with user, keyword, and dates
         else:
             query = keyword + "(from:" + user + ")(to:" + user + ")since:" + str(start_date.year) + "-" + str(
                 start_date.month) + "-" + str(start_date.day) + "until:" + str(end_date.year) + "-" + str(
-                end_date.month) + "-" + str(end_date.day)
+                end_date.month) + "-" + str(end_date.day) + " -RT"
             return self.parse_tweets(self.api.search(query, tweet_mode='extended'))
 
     # gather a users lists members (helper method to get valuable users)

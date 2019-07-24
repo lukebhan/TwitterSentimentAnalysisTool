@@ -39,13 +39,14 @@ class Database:
 
     # updates a column based on id
     def update_column_by_id(self, table_name, column_name, id, new_value):
-        table_command = "UPDATE " + table_name + " SET " + column_name + " = " + new_value + \
-                        " WHERE id = " + id
+        table_command = "UPDATE " + table_name + " SET " + column_name + " = " + str(new_value) + \
+                        " WHERE id = " + str(id)
         self.cursor.execute(table_command)
 
     def update_column_by_text(self, table_name, column_name, text, new_value):
-        table_command = "UPDATE " + table_name + " SET " + column_name + " = " + new_value + \
-                        " WHERE text = " + text
+        table_command = "UPDATE " + table_name + " SET " + column_name + " = " + str(new_value) + \
+                        " WHERE text = " + "'{0}'".format(text)
+        print(table_command)
         self.cursor.execute(table_command)
 
     # creates a new column and adds data in form of a data object to it into it

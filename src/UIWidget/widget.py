@@ -48,7 +48,7 @@ class UserInterface:
     # updates to next tweet and scores the prev tweet as positive
     def pos_callback(self):
         self.data.get_tweet(self.count).add_given_score(1)
-        self.db.update_column(self.db_name, 'given_score', self.data.get_tweet(self.count).text,
+        self.db.update_column_by_text(self.db_name, 'given_score', self.data.get_tweet(self.count).text,
                               self.data.get_tweet(self.count).given_score)
         self.count += 1
         self.update_text()
@@ -56,7 +56,7 @@ class UserInterface:
     # updates to next tweet and scores the prev tweet as negative
     def neg_callback(self):
         self.data.get_tweet(self.count).add_given_score(-1)
-        self.db.update_column(self.db_name, 'given_score', self.data.get_tweet(self.count).text,
+        self.db.update_column_by_text(self.db_name, 'given_score', self.data.get_tweet(self.count).text,
                               self.data.get_tweet(self.count).given_score)
         self.count += 1
         self.update_text()
@@ -64,7 +64,7 @@ class UserInterface:
     # updates to next tweet and scores the prev tweet as neutral
     def neutral_callback(self):
         self.data.get_tweet(self.count).add_given_score(0)
-        self.db.update_column(self.db_name, 'given_score', self.data.get_tweet(self.count).text,
+        self.db.update_column_by_text(self.db_name, 'given_score', self.data.get_tweet(self.count).text,
                               self.data.get_tweet(self.count).given_score)
         self.count += 1
         self.update_text()
@@ -72,7 +72,7 @@ class UserInterface:
     # updates to next tweet and scores the prev tweet as irrelevant
     def irr_callback(self):
         self.data.get_tweet(self.count).add_given_score(100)
-        self.db.update_column(self.db_name, 'given_score', self.data.get_tweet(self.count).text,
+        self.db.update_column_by_text(self.db_name, 'given_score', self.data.get_tweet(self.count).text,
                               self.data.get_tweet(self.count).given_score)
         self.count += 1
         self.update_text()
@@ -126,5 +126,5 @@ class UserInterface:
             try:
                 self.text_var.set(self.data.get_tweet(self.count).text)
                 self.count_text.set("Count: " + str(self.count) + "/" + str(self.data.get_size()))
-            except Exception:
+            except IndexError:
                 print("Tweet index not available")

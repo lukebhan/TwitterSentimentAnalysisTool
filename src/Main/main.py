@@ -7,7 +7,7 @@ from src.Database.data_to_csv import CSV
 from src.Obj.TweetList import TweetList
 from src.Obj.tweet import Tweet
 import time
-import urllib
+import random
 
 
 def main():
@@ -30,7 +30,13 @@ def main():
 
     db_user_column = ['Username']
     db_usre_type = ['VARCHAR']
-    data = db.parse_db_into_tweet_list('bitcoin')
+    users = db.get_column_data('users', 'username')
+    list = TweetList()
+    for user in users:
+        data = api.search('bitcoin', user[0])
+        list.insert_list(data)
+        print(list)
+    db.insert_tweet_list('bitcoin', list)
 
 if __name__ == "__main__":
     main()

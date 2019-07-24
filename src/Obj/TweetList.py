@@ -18,8 +18,9 @@ class TweetList:
 
     # Adds a tweet entry and returns the new size of the list, for convinience.
     def insert_data(self, tweet):
-        self.data[self.count] = tweet
-        self.count += 1
+        if tweet not in self.data.values():
+            self.data[self.count] = tweet
+            self.count += 1
         return self.count
 
     # Removes the last tweet and returns the new size of the list, for
@@ -55,4 +56,8 @@ class TweetList:
 
     def insert_list(self, tweet_list):
         for index in tweet_list.data:
-            self.insert_data(tweet_list.data[index])
+            if tweet_list.data[index] not in self.data.values():
+                self.insert_data(tweet_list.data[index])
+
+    def __len__(self):
+        return self.count
