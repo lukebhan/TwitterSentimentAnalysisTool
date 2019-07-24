@@ -68,24 +68,31 @@ class Database:
 
     # inserts a tweet object into a table
     def insert_tweet(self, table_name, id, tweet):
-        table_command = "INSERT into {0}" \
-                        " VALUES ({1}, '{2}', '{3}', {4}, {5}, {6}, '{7}', '{8}', '{9}')".format(table_name, str(id),
-                                                                                  self.check_none(tweet.text).replace(
-                                                                                      "'", ""),
-                                                                                  self.check_none(tweet.user),
-                                                                                  self.check_none(tweet.retweet_count),
-                                                                                  self.check_none(tweet.favorite_count),
-                                                                                  self.check_none(tweet.follower_count),
-                                                                                  self.check_none(tweet.date),
-                                                                                  self.check_none(tweet.nlp_score),
-                                                                                  self.check_none(tweet.given_score))
-        print(table_command)
-        self.cursor.execute(table_command)
+        if tweet.follower_count > 2000:
+            table_command = "INSERT into {0}" \
+                            " VALUES ({1}, '{2}', '{3}', {4}, {5}, {6}, '{7}', '{8}', '{9}')".format(table_name, str(id),
+                                                                                      self.check_none(tweet.text).replace(
+                                                                                          "'", ""),
+                                                                                      self.check_none(tweet.user),
+                                                                                      self.check_none(tweet.retweet_count),
+                                                                                      self.check_none(tweet.favorite_count),
+                                                                                      self.check_none(tweet.follower_count),
+                                                                                      self.check_none(tweet.date),
+                                                                                      self.check_none(tweet.nlp_score),
+                                                                                      self.check_none(tweet.given_score))
+            print(table_command)
+            self.cursor.execute(table_command)
 
     # inserts a list of tweet objects
-    def insert_list(self, table_name, tweet_list):
+    def insert_tweet_list(self, table_name, tweet_list):
         for value in tweet_list.data:
             self.insert_tweet(table_name, value, tweet_list.data[value])
+
+    # inserts a general list
+    def insert_list(self, table_name, list):
+        for value in list:
+            table_command = "INSERT into {0} VALUES ('{1}')".format(table_name, value)
+            self.cursor.execute(table_command)
 
     # helper method for insert_data
     @staticmethod
@@ -94,3 +101,7 @@ class Database:
             return "-10"
         else:
             return value
+
+    def commit(self):
+        self.connection.commit()
+

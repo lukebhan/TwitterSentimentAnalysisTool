@@ -47,3 +47,7 @@ class TweetList:
 
     def get_size(self):
         return len(self.data)
+
+    def insert_list(self, tweet_list):
+        for index in tweet_list.data:
+            self.insert_data(tweet_list.data[index])
