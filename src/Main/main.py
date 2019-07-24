@@ -7,9 +7,11 @@ from src.Database.data_to_csv import CSV
 from src.Obj.TweetList import TweetList
 from src.Obj.tweet import Tweet
 import time
+import urllib
 
 
 def main():
+    # TODO(luke-bhan): Move this to a `.env` or similar file
     api = "igiH98aVHuB4zsmwKlWEe6qYs"
     api_secret = "lvECXM12Yh7SKYCU6ge05m7dE8R8evdPiIIIcAje7lIruKjvmf"
 
@@ -19,11 +21,12 @@ def main():
     # Gather users
     api = TweetScraper(api, api_secret, access_token, acesss_token_secret)
 
+    # TODO(luke-bhan): Move this to a `.env` or similar file
     db = Database('luke', 'password', '127.0.0.1', '5432')
     db_column_name = ['Id', 'Text', 'Username', 'Favorite_Count', 'Retweet_Count', 'Follower_Count', 'Date',
                       'Nlp_Score',
                       'Given_Score']
-    db_column_type = ['integer', 'VARCHAR', 'VARCHAR', 'integer', 'integer', 'integer', 'VARCHAR', 'varchar', 'INTEGER']
+    db_column_type = ['INTEGER', 'VARCHAR', 'VARCHAR', 'INTEGER', 'INTEGER', 'INTEGER', 'VARCHAR', 'VARCHAR', 'INTEGER']
 
     db_user_column = ['Username']
     db_usre_type = ['VARCHAR']
@@ -31,7 +34,7 @@ def main():
     tweet_list = TweetList()
     for member in list:
         print(member)
-        tweets = api.search('bitcoin%20btc%20bit%20%23bt', member[0])
+        tweets = api.search(urllib.parse.urlencode('bitcoin btc bit #btc'), member[0])
         for json in tweets.data:
             print(tweets.data[json])
             tweet_list.insert_list(tweets)
