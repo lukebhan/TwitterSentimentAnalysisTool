@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/luke/PycharmProjects/sentimentAnalysis/venv"
+VIRTUAL_ENV="/usr/local/google/home/ahafiz/Code/TwitterSentimentAnalysisTool-TSAT-/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

@@ -5,9 +5,8 @@
  Includes graphical visuals to analyze and categorize data
  
 **Dependencies:**
-* Pandas - Version 0.24.2
-* psycopg2 - Version 2.8.3
-* Tweepy - Version 3.7.0
+
+* requirements.txt
 * Docker - Docker Version 18.09.6
 * Docker Compose - Version 1.24.0 
 * Tkinter - Version 8.6

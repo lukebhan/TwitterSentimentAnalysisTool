@@ -29,7 +29,7 @@ end
 # unset irrelevant variables
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/home/luke/PycharmProjects/sentimentAnalysis/venv"
+set -gx VIRTUAL_ENV "/usr/local/google/home/ahafiz/Code/TwitterSentimentAnalysisTool-TSAT-/venv"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH
