@@ -75,7 +75,8 @@ class Tweet:
         self.add_follower_count(follower_count)
 
     # adds tweet from inputs with scores
-    def add_tweet(self, text, user, favorite_count, reteweet_count, follower_count, date, nlp_score, given_score):
+    def add_tweet(self, text=None, user=None, favorite_count=None, reteweet_count=None, follower_count=None, date=None,
+                  nlp_score=None, given_score=None):
         self.add_user(user)
         self.add_creation_date(date)
         self.add_favorite_count(favorite_count)
@@ -84,4 +85,3 @@ class Tweet:
         self.add_follower_count(follower_count)
         self.add_nlp_score(nlp_score)
         self.add_given_score(given_score)
-

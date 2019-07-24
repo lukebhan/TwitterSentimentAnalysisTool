@@ -6,10 +6,12 @@ import tkinter
 # Last Updated: 7/15/19
 class UserInterface:
     # default constructor
-    def __init__(self, data):
+    def __init__(self, data, db, db_name):
         # initialize variables for iterating through data
         self.count = 1
         self.data = data
+        self.db_name = db_name
+        self.db = db
 
         # create root frame for ui, assign background color and initial size
         self.root = tkinter.Tk()
@@ -46,24 +48,32 @@ class UserInterface:
     # updates to next tweet and scores the prev tweet as positive
     def pos_callback(self):
         self.data.get_tweet(self.count).add_given_score(1)
+        self.db.update_column(self.db_name, 'given_score', self.data.get_tweet(self.count).text,
+                              self.data.get_tweet(self.count).given_score)
         self.count += 1
         self.update_text()
 
     # updates to next tweet and scores the prev tweet as negative
     def neg_callback(self):
         self.data.get_tweet(self.count).add_given_score(-1)
+        self.db.update_column(self.db_name, 'given_score', self.data.get_tweet(self.count).text,
+                              self.data.get_tweet(self.count).given_score)
         self.count += 1
         self.update_text()
 
     # updates to next tweet and scores the prev tweet as neutral
     def neutral_callback(self):
         self.data.get_tweet(self.count).add_given_score(0)
+        self.db.update_column(self.db_name, 'given_score', self.data.get_tweet(self.count).text,
+                              self.data.get_tweet(self.count).given_score)
         self.count += 1
         self.update_text()
 
     # updates to next tweet and scores the prev tweet as irrelevant
     def irr_callback(self):
         self.data.get_tweet(self.count).add_given_score(100)
+        self.db.update_column(self.db_name, 'given_score', self.data.get_tweet(self.count).text,
+                              self.data.get_tweet(self.count).given_score)
         self.count += 1
         self.update_text()
 
@@ -108,7 +118,7 @@ class UserInterface:
     # exception safety and updating tweets in real time
     def update_text(self):
         # terminate if count = size+1
-        if self.count == self.data.get_size()+1:
+        if self.count == self.data.get_size() + 1:
             self.text_var.set("Data Training is Comlpete. To edit, use the go back button. Otherwise close the window")
         # check to make sure user does not go to far back
         else:
@@ -118,4 +128,3 @@ class UserInterface:
                 self.count_text.set("Count: " + str(self.count) + "/" + str(self.data.get_size()))
             except Exception:
                 print("Tweet index not available")
-

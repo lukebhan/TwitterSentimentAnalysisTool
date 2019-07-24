@@ -1,4 +1,6 @@
 import psycopg2
+from src.Obj.tweet import Tweet
+from src.Obj.TweetList import TweetList
 
 
 # Class Database: Adds and removes objects from postgres
@@ -36,9 +38,14 @@ class Database:
         return self.cursor.execute(table_command)
 
     # updates a column based on id
-    def update_column(self, table_name, column_name, id, new_value):
+    def update_column_by_id(self, table_name, column_name, id, new_value):
         table_command = "UPDATE " + table_name + " SET " + column_name + " = " + new_value + \
                         " WHERE id = " + id
+        self.cursor.execute(table_command)
+
+    def update_column_by_text(self, table_name, column_name, text, new_value):
+        table_command = "UPDATE " + table_name + " SET " + column_name + " = " + new_value + \
+                        " WHERE text = " + text
         self.cursor.execute(table_command)
 
     # creates a new column and adds data in form of a data object to it into it
@@ -50,7 +57,7 @@ class Database:
 
     # deletes a row
     def delete_row(self, table_name, id):
-        table_command = "DELETE FROM " + table_name + " WHERE id =" + id
+        table_command = "DELETE FROM " + table_name + " WHERE id =" + str(id)
         self.cursor.execute(table_command)
 
     # gets column data and returns as list
@@ -61,9 +68,9 @@ class Database:
 
     # gets row data and returns it as a tweet
     def get_row_data(self, table_name, id):
-        table_command = "SELECT * WHERE id = " + id
+        table_command = "SELECT * FROM " + table_name + " WHERE id = " + str(id)
         self.cursor.execute(table_command)
-        print(self.cursor.fetchall)
+        return self.cursor.fetchall()
 
     # inserts a tweet object into a table
     def insert_tweet(self, table_name, id, tweet):
@@ -104,3 +111,24 @@ class Database:
     def commit(self):
         self.connection.commit()
 
+    def get_num_of_columns(self, name):
+        table_command = "SELECT COUNT(*) FROM " + name
+        self.cursor.execute(table_command)
+        return self.cursor.fetchone()[0]
+
+    def parse_db_into_tweet_list(self, name):
+        num_cols = self.get_num_of_columns(name)
+        Tweet_list = TweetList()
+        print(num_cols)
+        for id in range(1, num_cols + 1):
+            tweet = Tweet()
+            unparsed_data = self.get_row_data(name, id)
+            try:
+                unparsed_data = unparsed_data[0]
+            except IndexError:
+                continue
+
+            tweet.add_tweet(unparsed_data[1], unparsed_data[2], unparsed_data[3], unparsed_data[4], unparsed_data[5],
+                            unparsed_data[6])
+            Tweet_list.insert_data(tweet)
+        return Tweet_list

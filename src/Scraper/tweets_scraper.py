@@ -22,20 +22,13 @@ class TweetScraper:
     # Rate: 180 calls per window
     # Returns a tweet list
     def search(self, keyword, user=None, start_date=None, end_date=None):
-        # search with just user and dates
-        if keyword is None:
-            query = "(from:" + user + ")(to:" + user + ")since:" + str(start_date.year) + "-" + str(
-                start_date.month) + "-" + str(start_date.day) + "until:" + str(end_date.year) + "-" + str(
-                end_date.month) + "-" + str(end_date.day)
-            return self.parse_tweets(self.api.search(query, tweet_mode='extended'))
-
         # search with just a keyword
-        elif user is None:
+        if user is None:
             query = keyword
             return self.parse_tweets(self.api.search(query, tweet_mode='extended'))
 
         # search with just keyword and user
-        elif start_date is None:
+        elif start_date is None and end_date is None:
             query = keyword + "(from:" + user + ")(to:" + user + ")"
             return self.parse_tweets(self.api.search(query, tweet_mode='extended'))
 
