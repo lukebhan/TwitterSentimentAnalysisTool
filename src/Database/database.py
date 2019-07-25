@@ -93,6 +93,8 @@ class Database:
     # inserts a list of tweet objects
     def insert_tweet_list(self, table_name, tweet_list):
         for value in tweet_list.data:
+            print("db insert")
+            print(value)
             self.insert_tweet(table_name, value, tweet_list.data[value])
 
     # inserts a general list
@@ -124,9 +126,12 @@ class Database:
         for id in range(1, num_cols + 1):
             tweet = Tweet()
             unparsed_data = self.get_row_data(name, id)
+            print(unparsed_data)
             try:
                 unparsed_data = unparsed_data[0]
             except IndexError:
+                print(id)
+                print(unparsed_data)
                 continue
 
             tweet.add_tweet(unparsed_data[1], unparsed_data[2], unparsed_data[3], unparsed_data[4], unparsed_data[5],

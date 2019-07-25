@@ -20,6 +20,7 @@ class TweetList:
     def insert_data(self, tweet):
         if tweet not in self.data.values():
             self.data[self.count] = tweet
+            print(self.count)
             self.count += 1
         return self.count
 

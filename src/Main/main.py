@@ -32,6 +32,8 @@ def main():
     db_usre_type = ['VARCHAR']
     users = db.get_column_data('users', 'username')
     list = TweetList()
+    count = 0
+    db.create_table('bitcoin', db_column_name, db_column_type)
     for user in users:
         data = api.search('bitcoin', user[0])
         list.insert_list(data)
