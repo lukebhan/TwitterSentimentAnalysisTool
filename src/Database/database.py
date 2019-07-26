@@ -75,20 +75,27 @@ class Database:
 
     # inserts a tweet object into a table
     def insert_tweet(self, table_name, id, tweet):
-        if tweet.follower_count > 2000:
-            table_command = "INSERT into {0}" \
-                            " VALUES ({1}, '{2}', '{3}', {4}, {5}, {6}, '{7}', '{8}', '{9}')".format(table_name, str(id),
-                                                                                      self.check_none(tweet.text).replace(
-                                                                                          "'", ""), # discard single quotes
-                                                                                      self.check_none(tweet.user),
-                                                                                      self.check_none(tweet.retweet_count),
-                                                                                      self.check_none(tweet.favorite_count),
-                                                                                      self.check_none(tweet.follower_count),
-                                                                                      self.check_none(tweet.date),
-                                                                                      self.check_none(tweet.nlp_score),
-                                                                                      self.check_none(tweet.given_score))
-            print(table_command)
-            self.cursor.execute(table_command)
+        table_command = "INSERT into {0}" \
+                        " VALUES ({1}, '{2}', '{3}', {4}, {5}, {6}, '{7}', '{8}', '{9}')".format(table_name, str(id),
+                                                                                                 self.check_none(
+                                                                                                     tweet.text).replace(
+                                                                                                     "'", ""),
+                                                                                                 self.check_none(
+                                                                                                     tweet.user),
+                                                                                                 self.check_none(
+                                                                                                     tweet.retweet_count),
+                                                                                                 self.check_none(
+                                                                                                     tweet.favorite_count),
+                                                                                                 self.check_none(
+                                                                                                     tweet.follower_count),
+                                                                                                 self.check_none(
+                                                                                                     tweet.date),
+                                                                                                 self.check_none(
+                                                                                                     tweet.nlp_score),
+                                                                                                 self.check_none(
+                                                                                                     tweet.given_score))
+        print(table_command)
+        self.cursor.execute(table_command)
 
     # inserts a list of tweet objects
     def insert_tweet_list(self, table_name, tweet_list):
@@ -122,16 +129,12 @@ class Database:
     def parse_db_into_tweet_list(self, name):
         num_cols = self.get_num_of_columns(name)
         Tweet_list = TweetList()
-        print(num_cols)
         for id in range(1, num_cols + 1):
             tweet = Tweet()
             unparsed_data = self.get_row_data(name, id)
-            print(unparsed_data)
             try:
                 unparsed_data = unparsed_data[0]
             except IndexError:
-                print(id)
-                print(unparsed_data)
                 continue
 
             tweet.add_tweet(unparsed_data[1], unparsed_data[2], unparsed_data[3], unparsed_data[4], unparsed_data[5],
