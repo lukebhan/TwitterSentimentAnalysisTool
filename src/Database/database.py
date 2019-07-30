@@ -118,14 +118,17 @@ class Database:
         else:
             return value
 
+    # commits to db (used for testing, optimally destructor will commit)
     def commit(self):
         self.connection.commit()
 
+    # gets the number of columns of a table
     def get_num_of_columns(self, name):
         table_command = "SELECT COUNT(*) FROM " + name
         self.cursor.execute(table_command)
         return self.cursor.fetchone()[0]
 
+    # parses the table of tweets back into a tweet_list obj usable in plots
     def parse_db_into_tweet_list(self, name):
         num_cols = self.get_num_of_columns(name)
         Tweet_list = TweetList()
