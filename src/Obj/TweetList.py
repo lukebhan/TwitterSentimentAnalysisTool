@@ -1,3 +1,4 @@
+import random
 # Data Class: This class holds a dictionary of tweets for quick access via index
 # Written by Luke Bhan
 # Last Updated: 7/9/19
@@ -62,3 +63,11 @@ class TweetList:
 
     def __len__(self):
         return self.count
+
+    def generate_random_tweet_list(self, size):
+        values = random.sample(range(1, self.count+1), size)
+        tweet_list = TweetList()
+        for value in values:
+            tweet_list.insert_data(self.data[value])
+        return tweet_list
+

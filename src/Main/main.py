@@ -8,6 +8,7 @@ from src.Obj.TweetList import TweetList
 from src.Obj.tweet import Tweet
 import time
 import random
+from src.Visualization.Plot import Plot
 
 
 def main():
@@ -30,14 +31,9 @@ def main():
 
     db_user_column = ['Username']
     db_usre_type = ['VARCHAR']
-    users = db.get_column_data('users', 'username')
-    list = TweetList()
-    count = 0
-    for user in users:
-        data = api.search('bitcoin', user[0])
-        list.insert_list(data)
-        print(list)
-    db.insert_tweet_list('bitcoin', list)
+    plot = Plot(db)
+    plot.generate_projections('bitcoin', 'given_score')
+    plot.build_projections_histogram('bitcoin')
 
 if __name__ == "__main__":
     main()

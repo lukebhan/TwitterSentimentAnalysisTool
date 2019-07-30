@@ -80,7 +80,12 @@ class UserInterface:
     # defines a user interface to select score of tweet
     def widget(self):
         # set initial variables
-        self.text_var.set(self.data.get_tweet(self.count).text)
+        # noinspection PyBroadException
+        try:
+            self.text_var.set(self.data.get_tweet(self.count).text)
+        except Exception:
+            self.text_var.set("CHARACTER OUT OF RANGE")
+            print("Character is out of range")
         self.count_text.set("Count: " + str(self.count) + "/" + str(self.data.get_size()))
 
         # print tweet text
@@ -128,3 +133,6 @@ class UserInterface:
                 self.count_text.set("Count: " + str(self.count) + "/" + str(self.data.get_size()))
             except IndexError:
                 print("Tweet index not available")
+            except Exception:
+                self.text_var.set("CHARACTER OUT OF RANGE")
+                print("Character is out of range")
