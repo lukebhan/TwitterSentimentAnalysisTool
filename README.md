@@ -3,13 +3,6 @@
  ability to create one's own classifier based on preclassified input data.
  Auto scrapes Tweets and auto gathers users. Comes prebuilt with a docker postgres server managed by pgadmin
  Includes graphical visuals to analyze and categorize data
- 
-**Dependencies:**
-
-* requirements.txt
-* Docker - Docker Version 18.09.6
-* Docker Compose - Version 1.24.0 
-* Tkinter - Version 8.6
 
 **Important References:**
 * https://link.springer.com/article/10.1186/s40537-018-0120-0
