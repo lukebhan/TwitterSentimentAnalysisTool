@@ -28,14 +28,8 @@ def main():
     db_user_column = ['Username']
     db_user_type = ['VARCHAR']
     users = db.get_column_data('users', 'username')
-    tweet_list = TweetList()
-    for user in users:
-        tweet_list.insert_list(api.search('bitcoin', user[0]))
-        print(tweet_list)
-        print(user)
-    db.insert_tweet_list('bitcoin', tweet_list)
-
-
+    tweet_list = db.parse_db_into_tweet_list('bitcoin')
+    print(tweet_list)
 
 
 if __name__ == "__main__":

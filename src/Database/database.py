@@ -44,8 +44,8 @@ class Database:
         self.cursor.execute(table_command)
 
     def update_column_by_text(self, table_name, column_name, text, new_value):
-        table_command = "UPDATE " + table_name + " SET " + column_name + " = " + str(new_value) + \
-                        " WHERE text = " + "'{0}'".format(text)
+        table_command = "UPDATE " + table_name + " SET " + column_name + " = '" + str(new_value) + \
+                        "' WHERE text = " + "'{0}'".format(text)
         print(table_command)
         self.cursor.execute(table_command)
 
@@ -146,16 +146,8 @@ class Database:
                 continue
 
             tweet.add_tweet(unparsed_data[1], unparsed_data[2], unparsed_data[3], unparsed_data[4], unparsed_data[5],
-                            unparsed_data[6], unparsed_data[7], unparsed_data[8])
+                            unparsed_data[6], unparsed_data[7], unparsed_data[8], unparsed_data[9])
             Tweet_list.insert_data(tweet)
         return Tweet_list
-
-    @staticmethod
-    def generate_token_array(token_arr):
-        for value, index in enumerate(token_arr):
-            str = ""
-            for word in index:
-                str += word + ","
-            token_arr[value] = str[:-1]
 
 

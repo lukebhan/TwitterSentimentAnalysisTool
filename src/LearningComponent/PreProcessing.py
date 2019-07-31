@@ -26,3 +26,14 @@ class PreProcessing:
         tweet = re.sub(r'#([^\s]+)', r'\1', tweet)  # remove the # in #hashtag
         tweet = word_tokenize(tweet)  # remove repeated characters (helloooooooo into hello)
         return [word for word in tweet if word not in self._stopwords]
+
+    @staticmethod
+    def generate_token_array(token_arr):
+        for value, index in enumerate(token_arr):
+            str = ""
+            for word in index:
+                str += word + ","
+            token_arr[value] = str[:-1]
+        return token_arr
+
+
