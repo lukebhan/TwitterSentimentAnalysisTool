@@ -53,8 +53,7 @@ class Database:
     def create_column(self, table_name, column_name, data, type_data):
         table_command = "ALTER TABLE " + table_name + " ADD COLUMN " + column_name + " " + type_data
         self.cursor.execute(table_command)
-        for tweet in data:
-            self.insert_tweet(table_name, column_name, tweet)
+        self.insert_list(table_name, column_name, data)
 
     # deletes a row
     def delete_row(self, table_name, id):
@@ -105,9 +104,15 @@ class Database:
             self.insert_tweet(table_name, value, tweet_list.data[value])
 
     # inserts a general list
-    def insert_list(self, table_name, list):
+    def insert_list(self, table_name, column_name, list):
         for value in list:
-            table_command = "INSERT into {0} VALUES ('{1}')".format(table_name, value)
+            # noinspection PyBroadException
+            try:
+                value = value.replace("'", "")
+            except Exception:
+                pass
+            table_command = "INSERT into {0} ({1}) VALUES ('{2}')".format(table_name, column_name, value)
+            print(table_command)
             self.cursor.execute(table_command)
 
     # helper method for insert_data
@@ -141,6 +146,16 @@ class Database:
                 continue
 
             tweet.add_tweet(unparsed_data[1], unparsed_data[2], unparsed_data[3], unparsed_data[4], unparsed_data[5],
-                            unparsed_data[6])
+                            unparsed_data[6], unparsed_data[7], unparsed_data[8])
             Tweet_list.insert_data(tweet)
         return Tweet_list
+
+    @staticmethod
+    def generate_token_array(token_arr):
+        for value, index in enumerate(token_arr):
+            str = ""
+            for word in index:
+                str += word + ","
+            token_arr[value] = str[:-1]
+
+

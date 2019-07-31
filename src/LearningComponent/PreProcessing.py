@@ -4,6 +4,7 @@ from string import punctuation
 from nltk.corpus import stopwords
 from src.Obj.TweetList import TweetList
 
+
 # Tokenization of Data before ML Classifier
 class PreProcessing:
     # create stop words set
@@ -12,9 +13,9 @@ class PreProcessing:
 
     # process each tweet in a tweet_list
     def process_tweets(self, list_tweets):
-        processed_tweets = TweetList()
+        processed_tweets = []
         for index in list_tweets.data:
-            processed_tweets.insert_data(self.process_tweet(list_tweets.get_tweet(index).text))
+            processed_tweets.append(self.process_tweet(list_tweets.data[index].text))
         return processed_tweets
 
     # remove junk and tokenize

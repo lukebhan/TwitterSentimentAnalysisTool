@@ -15,6 +15,7 @@ class Tweet:
         self.follower_count = None
         self.nlp_score = None
         self.given_score = None
+        self.tokenized_text = None
 
     # Prints All Tweet Attributes
     def __str__(self):
@@ -56,6 +57,9 @@ class Tweet:
     def add_follower_count(self, count):
         self.follower_count = count
 
+    def add_tokenized_text(self, text):
+        self.tokenized_text = text
+
     # Parses json Obj to add tweet attributes
     def add_tweet_json(self, tweet):
         self.add_user(tweet.user.screen_name)
@@ -66,17 +70,19 @@ class Tweet:
         self.add_follower_count(tweet.user.followers_count)
 
     # adds tweet from input without scores
-    def add_tweet_noscore(self, text, user, favorite_count, reteweet_count, follower_count, date):
+    def add_tweet_noscore(self, text, user, favorite_count, reteweet_count, follower_count, date, tokenized_text=None):
         self.add_user(user)
         self.add_creation_date(date)
         self.add_favorite_count(favorite_count)
         self.add_retweet_count(reteweet_count)
         self.add_text(text)
         self.add_follower_count(follower_count)
+        if tokenized_text is not None:
+            self.add_tokenized_text(tokenized_text)
 
     # adds tweet from inputs with scores
     def add_tweet(self, text=None, user=None, favorite_count=None, reteweet_count=None, follower_count=None, date=None,
-                  nlp_score=None, given_score=None):
+                  nlp_score=None, given_score=None, tokenized_text=None):
         self.add_user(user)
         self.add_creation_date(date)
         self.add_favorite_count(favorite_count)
@@ -85,3 +91,4 @@ class Tweet:
         self.add_follower_count(follower_count)
         self.add_nlp_score(nlp_score)
         self.add_given_score(given_score)
+        self.add_tokenized_text(tokenized_text)

@@ -4,12 +4,9 @@ from src.Database.data_to_csv import CSV
 from src.UIWidget.widget import UserInterface
 from src.Database.data_to_csv import CSV
 from src.Obj.TweetList import TweetList
-from src.Obj.tweet import Tweet
-import time
-import random
+from src.LearningComponent.PreProcessing import PreProcessing
 import os
 from dotenv import load_dotenv
-from src.Visualization.Plot import Plot
 
 
 def main():
@@ -25,14 +22,19 @@ def main():
                   os.environ.get('DB_PORT'))
     db_column_name = ['Id', 'Text', 'Username', 'Favorite_Count', 'Retweet_Count', 'Follower_Count', 'Date',
                       'Nlp_Score',
-                      'Given_Score']
-    db_column_type = ['INTEGER', 'VARCHAR', 'VARCHAR', 'INTEGER', 'INTEGER', 'INTEGER', 'VARCHAR', 'VARCHAR', 'INTEGER']
+                      'Given_Score', 'tokenized_text']
+    db_column_type = ['INTEGER', 'VARCHAR', 'VARCHAR', 'INTEGER', 'INTEGER', 'INTEGER', 'VARCHAR', 'VARCHAR', 'INTEGER', 'VARCHAR']
 
     db_user_column = ['Username']
-    db_usre_type = ['VARCHAR']
-    plot = Plot(db)
-    plot.generate_projections('bitcoin', 'given_score')
-    plot.build_projections_histogram('bitcoin')
+    db_user_type = ['VARCHAR']
+    users = db.get_column_data('users', 'username')
+    tweet_list = TweetList()
+    for user in users:
+        tweet_list.insert_list(api.search('bitcoin', user[0]))
+        print(tweet_list)
+    db.insert_tweet_list('bitcoin', tweet_list)
+
+
 
 
 if __name__ == "__main__":
