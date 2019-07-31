@@ -32,6 +32,7 @@ def main():
     for user in users:
         tweet_list.insert_list(api.search('bitcoin', user[0]))
         print(tweet_list)
+        print(user)
     db.insert_tweet_list('bitcoin', tweet_list)
 
 
