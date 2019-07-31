@@ -1,6 +1,6 @@
 import psycopg2
 from src.Obj.tweet import Tweet
-from src.Obj.TweetList import TweetList
+from src.Obj.tweetlist import TweetList
 
 
 # Class Database: Adds and removes objects from postgres

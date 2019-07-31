@@ -1,6 +1,6 @@
 import tweepy
 from src.Obj.tweet import Tweet
-from src.Obj.TweetList import TweetList
+from src.Obj.tweetlist import TweetList
 
 
 # Tweet Scrape Class: This class uses tweepy to handle twitter api's and builds tweets

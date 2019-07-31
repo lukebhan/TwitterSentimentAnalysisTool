@@ -1,6 +1,6 @@
 import pandas as pd
 from src.Obj.tweet import Tweet
-from src.Obj.TweetList import TweetList
+from src.Obj.tweetlist import TweetList
 
 
 # Class CSV: Handles moving data to and from csv files. This is optional by user and is included if postgres is

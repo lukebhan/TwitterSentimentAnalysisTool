@@ -3,8 +3,9 @@ from src.Database.database import Database
 from src.Database.data_to_csv import CSV
 from src.UIWidget.widget import UserInterface
 from src.Database.data_to_csv import CSV
-from src.Obj.TweetList import TweetList
-from src.LearningComponent.PreProcessing import PreProcessing
+from src.Obj.tweetlist import TweetList
+from src.LearningComponent.model import Model
+from src.LearningComponent.preprocessing import PreProcessing
 import os
 from dotenv import load_dotenv
 
@@ -29,7 +30,12 @@ def main():
     db_user_type = ['VARCHAR']
     users = db.get_column_data('users', 'username')
     tweet_list = db.parse_db_into_tweet_list('bitcoin')
-    print(tweet_list)
+    process = PreProcessing()
+    list_words = process.process_tweets(tweet_list)
+    model = Model()
+    apple = model.build_vocabulary(list_words)
+    feature_vector = model.build_feature_vector(list_words)
+    classifier = model.train_classifier(feature_vector)
 
 
 if __name__ == "__main__":

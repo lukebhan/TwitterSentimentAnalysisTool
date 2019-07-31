@@ -2,7 +2,7 @@ import re
 from nltk.tokenize import word_tokenize
 from string import punctuation
 from nltk.corpus import stopwords
-from src.Obj.TweetList import TweetList
+from src.Obj.tweetlist import TweetList
 
 
 # Tokenization of Data before ML Classifier
