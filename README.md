@@ -2,7 +2,7 @@
  Tool for analyzing twitter data. Includes an auto build neural net classifier and the 
  ability to create one's own classifier based on preclassified input data.
  Auto scrapes Tweets and auto gathers users. Comes prebuilt with a docker postgres server managed by pgadmin
- Includes graphical visuals to analyze and categorize data
+ Includes graphical visuals to analyze and categorize data. Compares three classifiers: Naive Bayes, a custom unnamed classifier discuessed in resource 1, and svm
 
 **Important References:**
 * https://link.springer.com/article/10.1186/s40537-018-0120-0
