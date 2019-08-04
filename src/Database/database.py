@@ -136,7 +136,7 @@ class Database:
     # parses the table of tweets back into a tweet_list obj usable in plots
     def parse_db_into_tweet_list(self, name):
         num_cols = self.get_num_of_columns(name)
-        Tweet_list = TweetList()
+        tweet_list = TweetList()
         for id in range(1, num_cols + 1):
             tweet = Tweet()
             unparsed_data = self.get_row_data(name, id)
@@ -147,7 +147,7 @@ class Database:
 
             tweet.add_tweet(unparsed_data[1], unparsed_data[2], unparsed_data[3], unparsed_data[4], unparsed_data[5],
                             unparsed_data[6], unparsed_data[7], unparsed_data[8], unparsed_data[9])
-            Tweet_list.insert_data(tweet)
-        return Tweet_list
+            tweet_list.insert_data(tweet)
+        return tweet_list
 
 

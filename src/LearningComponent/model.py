@@ -9,7 +9,7 @@ class Model:
     def build_vocabulary(self, processed_multi_arr):
         vocab = []
 
-        for words in processed_multi_arr:
+        for (words, sentiment) in processed_multi_arr:
             vocab.extend(words)
 
         word_list = nltk.FreqDist(vocab)
@@ -28,3 +28,13 @@ class Model:
     def train_classifier(self, feature_vector):
         self.classifier = nltk.NaiveBayesClassifier.train(feature_vector)
         return self.classifier
+
+    def test_classifier(self, tweet):
+        test =  self.classifier.classify(self.extract_features(tweet))
+        print(test)
+        return test
+
+    def classify_test_set(self, test_set):
+        return_labels = [self.test_classifier(test_set.data[index].tokenized_text) for index in test_set.data]
+        return return_labels
+

@@ -51,9 +51,9 @@ class CSV:
     def write_userlist_to_csv(userlist, file_name=None):
         df = pd.DataFrame(userlist, columns=["Users"])
         if file_name is None:
-            df.to_csv('src/Database/output/userlist.csv', index=False)
+            df.to_csv('src/Database/output/userlist.csv', index=False, mode='a')
         else:
-            df.to_csv(file_name, index=False)
+            df.to_csv(file_name, index=False, mode='a')
 
     # Reads a list of users into an array
     # Takes the file location of users

@@ -64,7 +64,7 @@ class TweetList:
         return self.count
 
     def generate_random_tweet_list(self, size):
-        values = random.sample(range(1, self.count+1), size)
+        values = random.sample(range(1, self.count), size)
         tweet_list = TweetList()
         for value in values:
             tweet_list.insert_data(self.data[value])

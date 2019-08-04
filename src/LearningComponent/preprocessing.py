@@ -15,11 +15,12 @@ class PreProcessing:
     def process_tweets(self, list_tweets):
         processed_tweets = []
         for index in list_tweets.data:
-            processed_tweets.append(self.process_tweet(list_tweets.data[index].text))
+            processed_tweets.append(
+                (self._process_tweet(list_tweets.data[index].text), list_tweets.data[index].given_score))
         return processed_tweets
 
     # remove junk and tokenize
-    def process_tweet(self, tweet):
+    def _process_tweet(self, tweet):
         tweet = tweet.lower()
         tweet = re.sub('((www\.[^\s]+)|(https?://[^\s]+))', 'URL', tweet)  # remove URLs
         tweet = re.sub('@[^\s]+', 'AT_USER', tweet)  # remove usernames
@@ -29,11 +30,9 @@ class PreProcessing:
 
     @staticmethod
     def generate_token_array(token_arr):
-        for value, index in enumerate(token_arr):
+        for index, value in enumerate(token_arr):
             str = ""
-            for word in index:
+            for word in value[0]:
                 str += word + ","
-            token_arr[value] = str[:-1]
+            token_arr[index] = str[:-1]
         return token_arr
-
-
