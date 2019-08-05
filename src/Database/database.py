@@ -29,7 +29,6 @@ class Database:
             table_command += column_name[i] + " " + column_type[i] + ", "
         table_command = table_command[:-2]
         table_command += ");"
-        print(table_command)
         self.cursor.execute(table_command)
 
     # Returns number of rows in a specific column
@@ -46,7 +45,6 @@ class Database:
     def update_column_by_text(self, table_name, column_name, text, new_value):
         table_command = "UPDATE " + table_name + " SET " + column_name + " = '" + str(new_value) + \
                         "' WHERE text = " + "'{0}'".format(text)
-        print(table_command)
         self.cursor.execute(table_command)
 
     # creates a new column and adds data in form of a data object to it into it
@@ -93,14 +91,11 @@ class Database:
                                                                                                      tweet.nlp_score),
                                                                                                  self.check_none(
                                                                                                      tweet.given_score))
-        print(table_command)
         self.cursor.execute(table_command)
 
     # inserts a list of tweet objects
     def insert_tweet_list(self, table_name, tweet_list):
         for value in tweet_list.data:
-            print("db insert")
-            print(value)
             self.insert_tweet(table_name, value, tweet_list.data[value])
 
     # inserts a general list
@@ -112,7 +107,6 @@ class Database:
             except Exception:
                 pass
             table_command = "INSERT into {0} ({1}) VALUES ('{2}')".format(table_name, column_name, value)
-            print(table_command)
             self.cursor.execute(table_command)
 
     # helper method for insert_data

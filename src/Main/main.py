@@ -1,8 +1,6 @@
 from src.Scraper.tweets_scraper import TweetScraper
 from src.Database.database import Database
-from src.Database.data_to_csv import CSV
 from src.UIWidget.widget import UserInterface
-from src.Database.data_to_csv import CSV
 from src.Obj.tweetlist import TweetList
 from src.LearningComponent.model import Model
 from src.LearningComponent.preprocessing import PreProcessing
@@ -27,7 +25,7 @@ def main():
     # Gather Tweets From Past Week
     print("Gathering Tweets....")
     try:
-        tweets = api.get_weekly_tweets('bitcoin')
+        tweets = api.get_weekly_tweets(os.environ.get("KEYWORD"))
     except Exception:
         raise Exception("Unable to gather tweets")
 
@@ -79,12 +77,12 @@ def main():
     # ReParse DB to Get Test Set
     tweet_list = db.parse_db_into_tweet_list(table_name)
     training_set = TweetList()
-    test_set = TweetList
+    test_set = TweetList()
     for index in tweet_list.data:
         if tweet_list.data[index].given_score != -10:
             training_set.insert_data(tweet_list.data[index])
         else:
-            test_set.insert_data(tweet_list.data[index])
+            test_set.insert_data(test_set.insert_data(tweet_list.data[index]))
 
     # Build Vocabulary
     labeled_training_set = process.process_tweets(training_set)

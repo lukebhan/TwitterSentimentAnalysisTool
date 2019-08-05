@@ -1,6 +1,6 @@
 # docker-compose up
 # go to local host 5555
-# login with luke and password
+# login with user and password
 # create a db on the network: 172.18.0.1
 
 version: '3'
@@ -10,13 +10,13 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: "luke"
-      POSTGRES_PASSWORD: "password"
+      POSTGRES_USER: 'user'
+      POSTGRES_PASSWORD: 'password'
 
   postgres_manager:
     image: "dpage/pgadmin4"
     ports:
       - "5555:80"
     environment:
-      PGADMIN_DEFAULT_EMAIL: "luke"
-      PGADMIN_DEFAULT_PASSWORD: "password"
+      PGADMIN_DEFAULT_EMAIL: 'user'
+      PGADMIN_DEFAULT_PASSWORD: 'password'
