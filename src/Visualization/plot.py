@@ -34,4 +34,17 @@ class Plot:
 
         plt.show()
 
+    def create_classification_plot(self, pos_score, neg_score, neutral_score, irr_score):
+        x_values = ['Negative', 'Neutral', 'Positive', 'Irrelevant']
+        y_values = [neg_score, neutral_score, pos_score, irr_score]
+
+        fig, ax = plt.subplots()
+        ax.bar(x_values, y_values, color='orange')
+        plt.title("Given Scores for Classifying Test Set")
+        plt.ylabel("Count")
+        plt.xlabel("Given_Score")
+
+
+
+
 
