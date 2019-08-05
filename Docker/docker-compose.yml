@@ -1,7 +1,7 @@
 # docker-compose up
 # go to local host 5555
 # login with user and password
-# create a db on the network: 172.18.0.1
+# create a db on the network: 172.--.0.1
 
 version: '3'
 services:
