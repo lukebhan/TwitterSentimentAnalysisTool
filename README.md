@@ -4,7 +4,6 @@
  Includes graphical visuals to analyze and categorize data. 
 
 **Important References:**
-* https://link.springer.com/article/10.1186/s40537-018-0120-0
 * https://arxiv.org/pdf/1811.07522.pdf
 * https://jakevdp.github.io/PythonDataScienceHandbook/05.05-naive-bayes.html
 * https://towardsdatascience.com/creating-the-twitter-sentiment-analysis-program-in-python-with-naive-bayes-classification-672e5589a7ed
