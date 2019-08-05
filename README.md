@@ -10,7 +10,7 @@ Usage:
 4. In terminal navigate to the project and cd to Docker
 5. sudo docker-compose up
 6. Check localhost:5555 and sign in to postgres using 'user' and 'password' as email and password respectively
-7. create a server with the login 'user' and 'password' and the network 172.18.0.1
+7. create a server with the login 'user' and 'password' and the network 172.XX.0.1 - Look at the terminal for the ip address to fill in the XX
 8. Go to .env file and set environment variables (Assumes you created a twitter app)
 9. Run main.py, classify tweets and view projections
 
