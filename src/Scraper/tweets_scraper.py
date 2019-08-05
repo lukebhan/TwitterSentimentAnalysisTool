@@ -1,6 +1,8 @@
 import tweepy
 from src.Obj.tweet import Tweet
 from src.Obj.tweetlist import TweetList
+from datetime import datetime
+from datetime import timedelta
 
 
 # Tweet Scrape Class: This class uses tweepy to handle twitter api's and builds tweets
@@ -23,9 +25,9 @@ class TweetScraper:
     # Returns a tweet list
     def search(self, keyword, user=None, start_date=None, end_date=None):
         # search with just a keyword
-        if user is None:
+        if user is None and start_date is None and end_date is None:
             query = keyword + " -RT"
-            return self.parse_tweets(self.api.search(query, tweet_mode='extended'))
+            return self.parse_tweets(self.api.search(query, tweet_mode='extended', count=100))
 
         # search with just keyword and user
         elif start_date is None and end_date is None:
@@ -33,11 +35,31 @@ class TweetScraper:
             return self.parse_tweets(self.api.search(query, tweet_mode='extended'))
 
         # search with user, keyword, and dates
-        else:
+        elif end_date is None:
             query = keyword + "(from:" + user + ")(to:" + user + ")since:" + str(start_date.year) + "-" + str(
                 start_date.month) + "-" + str(start_date.day) + "until:" + str(end_date.year) + "-" + str(
                 end_date.month) + "-" + str(end_date.day) + " -RT"
             return self.parse_tweets(self.api.search(query, tweet_mode='extended'))
+        # search with keyword and end date (used in get_weekly_tweets)
+        else:
+            query = keyword + "()until:" + str(end_date.year) + "-" + str(end_date.month) + "-" + str(end_date.day) + " -RT"
+            return self.parse_tweets(self.api.search(query, tweet_mode='extended', count=100))
+
+    # gets weekly tweets
+    def get_weekly_tweets(self, keyword):
+        today = datetime.today()
+        cur_date = today
+        sub_week = timedelta(days=6, hours=20)
+        last_week = today - sub_week
+        tweet_list = TweetList()
+        query_count = 0
+        while cur_date > last_week:
+            tweet_list.insert_list(self.search(keyword=keyword, end_date=cur_date))
+            query_count += 1
+            cur_date = tweet_list.get_last().date
+        print("Over the Past Week: \nThere have been {0} tweets about {1} which were collected over {2} queries".format(
+            tweet_list.get_size(), keyword, query_count))
+        return tweet_list
 
     # gather a users lists members (helper method to get valuable users)
     # Rate: 75

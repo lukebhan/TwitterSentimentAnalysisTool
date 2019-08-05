@@ -70,3 +70,6 @@ class TweetList:
             tweet_list.insert_data(self.data[value])
         return tweet_list
 
+    def get_last(self):
+        return self.data[self.count-1]
+
