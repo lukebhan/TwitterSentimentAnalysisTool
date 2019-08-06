@@ -39,7 +39,7 @@ class TweetScraper:
                 end_date.month) + "-" + str(end_date.day) + " -RT"
             return self.parse_tweets(self.api.search(query, tweet_mode='extended'))
         # search with keyword and end date (used in get_weekly_tweets)
-        else:
+        elif user is None and start_date is None:
             query = keyword + "()until:" + str(end_date.year) + "-" + str(end_date.month) + "-" + str(
                 end_date.day) + " -RT"
             return self.parse_tweets(self.api.search(query, tweet_mode='extended', count=100))

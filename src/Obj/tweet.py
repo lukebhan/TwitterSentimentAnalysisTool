@@ -67,26 +67,17 @@ class Tweet:
         self.add_text(tweet.full_text)
         self.add_follower_count(tweet.user.followers_count)
 
-    # adds tweet from input without scores
-    def add_tweet_noscore(self, text, user, favorite_count, reteweet_count, follower_count, date, tokenized_text=None):
-        self.add_user(user)
-        self.add_creation_date(date)
-        self.add_favorite_count(favorite_count)
-        self.add_retweet_count(reteweet_count)
-        self.add_text(text)
-        self.add_follower_count(follower_count)
-        if tokenized_text is not None:
-            self.add_tokenized_text(tokenized_text)
-
     # adds tweet from inputs with scores
     def add_tweet(self, text=None, user=None, favorite_count=None, reteweet_count=None, follower_count=None, date=None,
                   nlp_score=None, given_score=None, tokenized_text=None):
+        if given_score is not None:
+            self.add_given_score(given_score)
+        if nlp_score is not None:
+            self.add_nlp_score(nlp_score)
         self.add_user(user)
         self.add_creation_date(date)
         self.add_favorite_count(favorite_count)
         self.add_retweet_count(reteweet_count)
         self.add_text(text)
         self.add_follower_count(follower_count)
-        self.add_nlp_score(nlp_score)
-        self.add_given_score(given_score)
         self.add_tokenized_text(tokenized_text)
