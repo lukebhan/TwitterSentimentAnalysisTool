@@ -2,7 +2,6 @@ import re
 from nltk.tokenize import word_tokenize
 from string import punctuation
 from nltk.corpus import stopwords
-from src.Obj.tweetlist import TweetList
 
 
 # Tokenization of Data before ML Classifier
@@ -31,8 +30,8 @@ class PreProcessing:
     @staticmethod
     def generate_token_array(token_arr):
         for index, value in enumerate(token_arr):
-            str = ""
+            string = ""
             for word in value[0]:
-                str += word + ","
-            token_arr[index] = str[:-1]
+                string += word + ","
+            token_arr[index] = string[:-1]
         return token_arr

@@ -1,9 +1,7 @@
+
+
 # Tweet Class: This class creates fast variable access for holding various tweet
 # attributes as well as parsing tweets.
-# Written by Luke Bhan
-# Last Updated: 7/9/19
-
-
 class Tweet:
     # Default Constructor
     def __init__(self):
@@ -26,8 +24,8 @@ class Tweet:
 
     # Insert Custom Attributes to class dict. Properties act as default properties
     def insert_custom_value(self, name, value):
-        dict = {name: value}
-        self.__dict__.update(dict)
+        dictionary = {name: value}
+        self.__dict__.update(dictionary)
 
     # Remove Custom Attribute
     def remove_custom_value(self, name):

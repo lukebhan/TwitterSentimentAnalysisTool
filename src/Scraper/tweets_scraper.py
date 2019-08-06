@@ -6,8 +6,6 @@ from datetime import timedelta
 
 
 # Tweet Scrape Class: This class uses tweepy to handle twitter api's and builds tweets
-# Written by Luke Bhan
-# Last Updated: 7/15/19
 class TweetScraper:
     # connect to twitter api with account
     def __init__(self, consumer_key, consumer_secret, access_token=None, access_token_secret=None):
@@ -42,7 +40,8 @@ class TweetScraper:
             return self.parse_tweets(self.api.search(query, tweet_mode='extended'))
         # search with keyword and end date (used in get_weekly_tweets)
         else:
-            query = keyword + "()until:" + str(end_date.year) + "-" + str(end_date.month) + "-" + str(end_date.day) + " -RT"
+            query = keyword + "()until:" + str(end_date.year) + "-" + str(end_date.month) + "-" + str(
+                end_date.day) + " -RT"
             return self.parse_tweets(self.api.search(query, tweet_mode='extended', count=100))
 
     # gets weekly tweets
@@ -98,9 +97,9 @@ class TweetScraper:
     # Returns a list status object (tweepy defined)
     def users_lists(self, user):
         lists = []
-        for list in self.api.lists_all(user):
-            if list.user.screen_name == user:
-                lists.append(list)
+        for tweet_list in self.api.lists_all(user):
+            if tweet_list.user.screen_name == user:
+                lists.append(tweet_list)
         return lists
 
     # Returns the text of a tweet id
@@ -122,4 +121,3 @@ class TweetScraper:
             tweet_obj.add_tweet_json(tweet)
             tweet_list.insert_data(tweet_obj)
         return tweet_list
-

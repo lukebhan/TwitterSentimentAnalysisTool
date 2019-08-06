@@ -1,9 +1,7 @@
 import random
-# Data Class: This class holds a dictionary of tweets for quick access via index
-# Written by Luke Bhan
-# Last Updated: 7/9/19
 
 
+# TweetList Class: This class holds a dictionary of tweets for quick access via index
 class TweetList:
     # Default Constructor
     def __init__(self):
@@ -25,7 +23,7 @@ class TweetList:
         return self.count
 
     # Removes the last tweet and returns the new size of the list, for
-    # convinience.
+    # convenience.
     def remove_last(self):
         self.data = self.data[:-1]
         self.count -= 1
@@ -63,6 +61,7 @@ class TweetList:
     def __len__(self):
         return self.count
 
+    # Generates a random subset of current list of users designated size
     def generate_random_tweet_list(self, size):
         values = random.sample(range(1, self.count), size)
         tweet_list = TweetList()

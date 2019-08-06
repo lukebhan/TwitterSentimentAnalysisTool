@@ -37,9 +37,9 @@ class Database:
         return self.cursor.execute(table_command)
 
     # updates a column based on id
-    def update_column_by_id(self, table_name, column_name, id, new_value):
+    def update_column_by_id(self, table_name, column_name, tweet_id, new_value):
         table_command = "UPDATE " + table_name + " SET " + column_name + " = " + str(new_value) + \
-                        " WHERE id = " + str(id)
+                        " WHERE id = " + str(tweet_id)
         self.cursor.execute(table_command)
 
     def update_column_by_text(self, table_name, column_name, text, new_value):
@@ -54,8 +54,8 @@ class Database:
         self.insert_list(table_name, column_name, data)
 
     # deletes a row
-    def delete_row(self, table_name, id):
-        table_command = "DELETE FROM " + table_name + " WHERE id =" + str(id)
+    def delete_row(self, table_name, tweet_id):
+        table_command = "DELETE FROM " + table_name + " WHERE id =" + str(tweet_id)
         self.cursor.execute(table_command)
 
     # gets column data and returns as list
@@ -65,15 +65,16 @@ class Database:
         return self.cursor.fetchall()
 
     # gets row data and returns it as a tweet
-    def get_row_data(self, table_name, id):
-        table_command = "SELECT * FROM " + table_name + " WHERE id = " + str(id)
+    def get_row_data(self, table_name, tweet_id):
+        table_command = "SELECT * FROM " + table_name + " WHERE id = " + str(tweet_id)
         self.cursor.execute(table_command)
         return self.cursor.fetchall()
 
     # inserts a tweet object into a table
-    def insert_tweet(self, table_name, id, tweet):
+    def insert_tweet(self, table_name, tweet_id, tweet):
         table_command = "INSERT into {0}" \
-                        " VALUES ({1}, '{2}', '{3}', {4}, {5}, {6}, '{7}', '{8}', '{9}')".format(table_name, str(id),
+                        " VALUES ({1}, '{2}', '{3}', {4}, {5}, {6}, '{7}', '{8}', '{9}')".format(table_name,
+                                                                                                 str(tweet_id),
                                                                                                  self.check_none(
                                                                                                      tweet.text).replace(
                                                                                                      "'", ""),
@@ -131,9 +132,9 @@ class Database:
     def parse_db_into_tweet_list(self, name):
         num_cols = self.get_num_of_columns(name)
         tweet_list = TweetList()
-        for id in range(1, num_cols + 1):
+        for tweet_id in range(1, num_cols + 1):
             tweet = Tweet()
-            unparsed_data = self.get_row_data(name, id)
+            unparsed_data = self.get_row_data(name, tweet_id)
             try:
                 unparsed_data = unparsed_data[0]
             except IndexError:
@@ -143,5 +144,3 @@ class Database:
                             unparsed_data[6], unparsed_data[7], unparsed_data[8], unparsed_data[9])
             tweet_list.insert_data(tweet)
         return tweet_list
-
-

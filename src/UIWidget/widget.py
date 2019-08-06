@@ -2,8 +2,6 @@ import tkinter
 
 
 # UI Class: This class creates a ui for manually scoring tweets
-# Written by Luke Bhan
-# Last Updated: 7/15/19
 class UserInterface:
     # default constructor
     def __init__(self, data, db, db_name):
@@ -49,7 +47,7 @@ class UserInterface:
     def pos_callback(self):
         self.data.get_tweet(self.count).add_given_score(1)
         self.db.update_column_by_text(self.db_name, 'given_score', self.data.get_tweet(self.count).text,
-                              self.data.get_tweet(self.count).given_score)
+                                      self.data.get_tweet(self.count).given_score)
         self.count += 1
         self.update_text()
 
@@ -57,7 +55,7 @@ class UserInterface:
     def neg_callback(self):
         self.data.get_tweet(self.count).add_given_score(-1)
         self.db.update_column_by_text(self.db_name, 'given_score', self.data.get_tweet(self.count).text,
-                              self.data.get_tweet(self.count).given_score)
+                                      self.data.get_tweet(self.count).given_score)
         self.count += 1
         self.update_text()
 
@@ -65,7 +63,7 @@ class UserInterface:
     def neutral_callback(self):
         self.data.get_tweet(self.count).add_given_score(0)
         self.db.update_column_by_text(self.db_name, 'given_score', self.data.get_tweet(self.count).text,
-                              self.data.get_tweet(self.count).given_score)
+                                      self.data.get_tweet(self.count).given_score)
         self.count += 1
         self.update_text()
 
@@ -73,7 +71,7 @@ class UserInterface:
     def irr_callback(self):
         self.data.get_tweet(self.count).add_given_score(100)
         self.db.update_column_by_text(self.db_name, 'given_score', self.data.get_tweet(self.count).text,
-                              self.data.get_tweet(self.count).given_score)
+                                      self.data.get_tweet(self.count).given_score)
         self.count += 1
         self.update_text()
 

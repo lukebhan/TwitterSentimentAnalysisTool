@@ -8,12 +8,13 @@ from src.Obj.tweetlist import TweetList
 class CSV:
     # Write a list of tweets to a file
     # Takes in a data object holding a list of tweets
-    # Default is tweetlist.csv in the ouptut folder
+    # Default is tweetlist.csv in the output folder
     @staticmethod
     def write_data_to_csv(tweet_list, file_name=None):
-        id, user, text, favorite_count, follower_count, retweet_count, date, nlp_score, given_score = [], [], [], [], [], [], [], [], []
+        tweet_id, user, text, favorite_count, follower_count, retweet_count, date, nlp_score, \
+            given_score = [], [], [], [], [], [], [], [], []
         for value in tweet_list.data:
-            id.append(value)
+            tweet_id.append(value)
             user.append(tweet_list.data[value].user)
             text.append(tweet_list.data[value].text)
             follower_count.append(tweet_list.data[value].follower_count)
@@ -22,10 +23,10 @@ class CSV:
             nlp_score.append(tweet_list.data[value].nlp_score)
             given_score.append(tweet_list.data[value].given_score)
             favorite_count.append(tweet_list.data[value].favorite_count)
-        dict = {'id': id, 'text': text, 'user': user, 'favorite_count': favorite_count, 'retweet_count':
+        dictionary = {'id': tweet_id, 'text': text, 'user': user, 'favorite_count': favorite_count, 'retweet_count':
             retweet_count, 'follower_count': follower_count, 'date': date, 'nlp_score': nlp_score,
-                'given_score': given_score}
-        df = pd.DataFrame(dict)
+            'given_score': given_score}
+        df = pd.DataFrame(dictionary)
         if file_name is None:
             df.to_csv('src/Database/output/tweetlist.csv', index=False)
         else:
@@ -34,13 +35,14 @@ class CSV:
     # Reads a list of tweet objects from a file
     # Returns a data object and takes in a file location of tweets
     # def read_data_from_csv(self, file_name):
-    def read_data_from_csv(self, file_name):
+    @staticmethod
+    def read_data_from_csv(file_name):
         data = TweetList()
         df = pd.read_csv(file_name)
         for index, row in df.iterrows():
             tweet = Tweet()
             tweet.add_tweet_noscore(row['text'], row['user'], row['favorite_count'], row['retweet_count'],
-                                   row['follower_count'], row['date'])
+                                    row['follower_count'], row['date'])
             data.insert_data(tweet)
         return data
 
@@ -63,5 +65,5 @@ class CSV:
         try:
             userlist = pd.read_csv(file_name)
         except Exception:
-            print("The file name: " + file_name + " is not a proper path")
+            raise Exception("File not found")
         return userlist.values.tolist()
