@@ -22,7 +22,6 @@
 * https://www.sciencedirect.com/science/article/pii/S2405844018332067
 * https://arxiv.org/pdf/1509.02971.pdf
 
-
 **Advanced Usage:**
 The tool consists of a series of classes for managing and classifying twitterdata documented here:
 
