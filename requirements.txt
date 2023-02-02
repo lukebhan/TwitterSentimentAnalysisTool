@@ -37,6 +37,6 @@ termcolor==1.1.0
 tweepy==3.8.0
 typing==3.7.4
 urllib3==1.26.5
-Werkzeug==0.15.4
+Werkzeug==0.15.5
 wrapt==1.11.2
 xlrd==1.2.0
