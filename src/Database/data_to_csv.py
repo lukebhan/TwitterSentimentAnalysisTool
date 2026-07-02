@@ -6,6 +6,30 @@ from src.Obj.tweetlist import TweetList
 # Class CSV: Handles moving data to and from csv files. This is optional by user and is included if postgres is
 # not a preferred method of storage
 class CSV:
+    TEXT_COLUMNS = ["text", "tweet", "full_text", "content", "clean_text", "message"]
+    USER_COLUMNS = ["user", "username", "screen_name", "author", "handle"]
+    FAVORITE_COLUMNS = ["favorite_count", "favorite", "favorites", "likes", "like_count"]
+    RETWEET_COLUMNS = ["retweet_count", "retweets", "repost_count"]
+    FOLLOWER_COLUMNS = ["follower_count", "followers", "followers_count"]
+    DATE_COLUMNS = ["date", "created_at", "timestamp", "posted_at"]
+
+    @staticmethod
+    def _pick_column(columns, candidates):
+        normalized = {column.strip().lower(): column for column in columns}
+        for candidate in candidates:
+            if candidate in normalized:
+                return normalized[candidate]
+        return None
+
+    @staticmethod
+    def _read_value(row, column, default=None):
+        if column is None:
+            return default
+        value = row[column]
+        if pd.isna(value):
+            return default
+        return value
+
     # Write a list of tweets to a file
     # Takes in a data object holding a list of tweets
     # Default is tweetlist.csv in the output folder
@@ -39,10 +63,24 @@ class CSV:
     def read_data_from_csv(file_name):
         data = TweetList()
         df = pd.read_csv(file_name)
+        text_col = CSV._pick_column(df.columns, CSV.TEXT_COLUMNS)
+        if text_col is None:
+            raise Exception("CSV must include a tweet text column")
+        user_col = CSV._pick_column(df.columns, CSV.USER_COLUMNS)
+        favorite_col = CSV._pick_column(df.columns, CSV.FAVORITE_COLUMNS)
+        retweet_col = CSV._pick_column(df.columns, CSV.RETWEET_COLUMNS)
+        follower_col = CSV._pick_column(df.columns, CSV.FOLLOWER_COLUMNS)
+        date_col = CSV._pick_column(df.columns, CSV.DATE_COLUMNS)
         for index, row in df.iterrows():
             tweet = Tweet()
-            tweet.add_tweet_noscore(row['text'], row['user'], row['favorite_count'], row['retweet_count'],
-                                    row['follower_count'], row['date'])
+            tweet.add_tweet(
+                CSV._read_value(row, text_col, ""),
+                CSV._read_value(row, user_col, ""),
+                CSV._read_value(row, favorite_col, 0),
+                CSV._read_value(row, retweet_col, 0),
+                CSV._read_value(row, follower_col, 0),
+                CSV._read_value(row, date_col, "")
+            )
             data.insert_data(tweet)
         return data
 
