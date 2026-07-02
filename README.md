@@ -11,7 +11,7 @@
 5. sudo docker-compose up
 6. Check localhost:5555 and sign in to postgres using 'user' and 'password' as email and password respectively
 7. create a server with the login 'user' and 'password' and the network 172.XX.0.1 - Look at the terminal for the ip address to fill in the XX
-8. Go to .env file and set environment variables (Assumes you created a twitter app)
+8. Copy `.env.example` to `.env` and set environment variables (Assumes you created a twitter app)
 9. Run main.py, classify tweets and view projections
 
 **Important References:**
@@ -49,7 +49,7 @@ The tool consists of a series of classes for managing and classifying twitterdat
 **Data_To_Csv (Not used in Default Main)**
 * *Constructor:* * Does nothing
 * *write_data_to_csv(tweet_list, file_name):* * Writes tweets to a csv file at the file_name path. File_name defaults to src/Database/output/tweetlist.csv
-* *read_data_from_csv(file_name):* * Reads tweets from a csv file and parses into a TweetList obj
+* *read_data_from_csv(file_name):* * Reads tweets from a csv file and parses into a TweetList obj. Accepts native exports with `text`, `user`, `favorite_count`, `retweet_count`, `follower_count`, and `date`, plus common TweetClaw or X/Twitter export columns such as `tweet`, `full_text`, `content`, `clean_text`, `username`, `screen_name`, `likes`, `retweets`, `followers`, `created_at`, and `timestamp`.
 * *write_userlist_to_csv(userlist, file_name):* * Writes a list of users to a csv file at the file_name path. File_name defaults to src/Database/output/userlist.csv
 * *read_userlist_from_csv(file_name):* * Reads a column of users from csv. Returns python list
 
@@ -77,4 +77,3 @@ The tool consists of a series of classes for managing and classifying twitterdat
 * *generate_projections(db_name, column_name):* * Gathers all manually classified tweet scores and assigns values
 * *build_projections_histogram:* * Displays a histogram of manually classified results
 * *create_classification_plot(pos_score, neg_score, neutral_score, irr_score):* * Displays a histogram of given params. Used to display results from NaiveBayes Classification Tool
-
